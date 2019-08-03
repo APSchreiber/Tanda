@@ -14,7 +14,6 @@ def check(username, password):
     return True
   return False
 
-
 ############################################
 
 @error(500)
@@ -28,6 +27,10 @@ def root_static():
 @route('/static/<filepath:path>')
 def serve_static(filepath):
   return static_file(filepath, root='../')
+
+@route('/baker')
+def root_static():
+  return static_file('baker.html', root='../baker/')
 
 
 ############################################
