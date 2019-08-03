@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	
-	var config = musicSiteConfig;
+	var config = tandaConfig;
 	
   // Data Tables config
   var dtConfig = {
@@ -256,7 +256,7 @@ $(document).ready(function(){
 	/********** Init **********/
 	
 	// Init
-	displayItems("event");
+	displayItems("people");
 	
 	/********** Events form **********/
   
@@ -274,11 +274,11 @@ $(document).ready(function(){
 		// }
 	// });
 	
-	// Display All Events
+	// Display Items
 	function displayItems(category) {
 		$.ajax({
 			type: "GET",
-			url: "/" + category + "s/table",
+			url: "/" + category + "/table",
 			success: function (r) {
 				$("#" + category + "-table").html(r);
         
@@ -296,10 +296,6 @@ $(document).ready(function(){
   $(".inputForm .closeX").click(function() {
     closeForms();
   });
-  
-  /********** Musicbox **********/
-  
-  $(".musicBox").musicbox();
 	
 	/********** Defaults for forms from config **********/
 	
