@@ -1,0 +1,80 @@
+/** font-family: 'Amatic SC', cursive; **/
+/** font-family: 'Marck Script', cursive; **/
+/** font-family: 'Cinzel', serif; **/
+/** font-family: 'Quicksand', sans-serif; **/
+/** font-family: 'Bangers', cursive; **/
+/** font-family: 'Berkshire Swash', cursive; **/
+/** font-family: 'IM Fell English SC', serif; */
+/** font-family: 'Cabin Sketch', cursive; */
+/** font-family: 'Alegreya SC', serif; */
+/** font-family: 'Fredericka the Great', cursive; */
+/** font-family: 'Farsan', cursive; */
+/** font-family: 'Kalam', cursive; */
+
+/********** Fonts **********/
+
+.cabin-sketch {
+  font-family: 'Cabin Sketch', cursive;
+}
+
+.amatic {
+  font-family: 'Amatic SC', cursive;
+}
+
+.marckScript {
+  font-family: 'Marck Script', cursive;
+}
+
+.cinzel {
+  font-family: 'Cinzel', serif;
+}
+
+.quicksand {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 400;
+  font-size: 1.1em;
+  margin: 8px;
+}
+
+.bangers {
+  font-family: 'Bangers', cursive;
+}
+
+.berkshire {
+  font-family: 'Berkshire Swash', cursive;
+}
+
+.imfell {
+  font-family: 'IM Fell English SC', serif;
+}
+
+
+html {
+    text-align: center;
+    
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .clear {
+    clear: both;
+  }
+  
+  #container {
+    position: relative;
+    z-index: 10;
+    width: 88%;
+    max-width: 1200px;
+    height: 100%;
+    padding: 0 22px 0 22px;
+    margin: 0 auto;
+    opacity: 0.95;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Quicksand', sans-serif;
+    color: #333;
+  }
