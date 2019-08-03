@@ -78,3 +78,128 @@ html {
     font-family: 'Quicksand', sans-serif;
     color: #333;
   }
+
+
+  /********** manager **********/
+
+.manager h1 {
+    font-family: 'Kalam', cursive;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .addItemLink {
+    font-weight: bold;
+    float: left;
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+  }
+  
+  /********** topnav **********/
+  
+  /* Add a black background color to the top navigation */
+  .topnav {
+      background-color: #333;
+      font-family: 'Quicksand', sans-serif;
+      overflow: hidden;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .topnav a {
+      float: left;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+  }
+  
+  /* Change the color of links on hover */
+  .topnav a:hover {
+      background-color: #ddd;
+      color: black;
+  }
+  
+  /* Add a color to the active/current link */
+  .topnav a.active {
+      background-color: #4CAF50;
+      color: white;
+  }
+  
+  /********** forms **********/
+  
+  #events {
+      font-family: 'Quicksand', sans-serif;
+  }
+  
+  .manager {
+      font-family: 'Quicksand', sans-serif;
+  }
+  
+  .eventDetail {
+      
+  }
+  
+  .overlay {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    background-color: black;
+  }
+  
+  .inputForm {
+      font-family: 'Quicksand', sans-serif;
+      text-align: left;
+      border: 1px solid #555;
+      width: 60%;
+      padding: 6px;
+      margin: 0 auto;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    margin-left: -30%;
+    z-index: 999;
+    background-color: white;
+  }
+  
+  .inputForm h2 {
+    float: left;
+  }
+  
+  .inputForm .closeX {
+    font-weight: bold;
+    font-size: 1.3em;
+    cursor: pointer;
+    float: right;
+    margin-right: 10px;
+  }
+  
+  .inputForm label {
+      float: left;
+      min-width: 180px;
+      margin: 6px;
+  }
+  
+  .inputForm input {
+      float: left;
+      min-width: 300px;
+      margin: 6px;
+  }
+  
+  .inputForm textarea {
+      float: left;
+      min-width: 300px;
+      margin: 6px;
+  }
+  
+  .inputForm select {
+      float: left;

@@ -1,50 +1,109 @@
 <!DOCTYPE html>
+
 <head>
 
-        <meta name="description" content="Tanda - The Lending Circle" />
-  <meta charset="utf-8" />
- 
-  <link rel="canonical" href="http://tanda.apschreiber.com/">
+    <meta name="description" content="Tanda - The Baker" />
+    <meta charset="utf-8" />
 
-  <title>Tanda - The Lending Circle</title>
-  
-  <link href='http://fonts.googleapis.com/css?family=IM+Fell+English+SC' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Marck+Script' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Quicksand:400,700,300' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Bangers' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Berkshire+Swash' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:400,700' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Alegreya+SC:400,900' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Fredericka+the+Great' rel='stylesheet' type='text/css'>'
-  <link href="https://fonts.googleapis.com/css?family=Farsan|Kalam" rel="stylesheet">
-	
-  <link rel="stylesheet" type="text/css" href="/static/js/DataTables/datatables.min.css"/>
-  <link href="/static/css/style.css" rel="stylesheet" type="text/css">
-  <link href="/static/js/musicbox/css/musicbox.css" rel="stylesheet" type="text/css">
-	
+    <link rel="canonical" href="http://tanda.apschreiber.com/">
+
+    <title>Tanda - The Lending Circle</title>
+
+    <link href='http://fonts.googleapis.com/css?family=IM+Fell+English+SC' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Marck+Script' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Quicksand:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Bangers' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Berkshire+Swash' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Alegreya+SC:400,900' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fredericka+the+Great' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Farsan|Kalam" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/static/js/DataTables/datatables.min.css" />
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/static/js/musicbox/css/musicbox.css" rel="stylesheet" type="text/css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/DataTables/datatables.min.js"></script>
     <script src="/static/config.json.js"></script>
-    <script src="/static/js/musicbox/musicbox.js"></script>
     <script src="/static/js/manager.js"></script>
-  
+
 </head>
+
 <body>
 
-<div id="container" class="manager">
+    <div id="container" class="manager">
 
-    <div class="overlay hidden"></div>
+        <div class="overlay hidden"></div>
 
-    <div class="topnav">
-        <a href="#home">home</a>
-        <a class="active" href="/circles">circles</a>
-        <a href="/people">people</a>
-        <a href="/settings">settings</a>
+        <div class="topnav">
+            <a href="#home">home</a>
+            <a class="active" href="#circles">circles</a>
+            <a href="#people">people</a>
+            <a href="#settings">settings</a>
+        </div>
     </div>
- 
-</div>
+
+    <!-- People Manager -->
+    <div id="event" class="managerPane">
+        <h1>People</h1>
+
+        <div class="clear"></div>
+
+        <div id="event-table"></div>
+
+        <div class="inputForm hidden" id="editForm-people">
+
+            <h2>Event</h2>
+            <div class="closeX">x</div>
+            <div class="clear"></div>
+
+            <label for="people-last">Last Name</label>
+            <input class="people" type="text" id="people-last" />
+            <div class="clear"></div>
+
+            
+            <label for="people-first">First Name</label>
+            <input class="people" type="text" id="people-first" />
+            <div class="clear"></div>
+
+            <label for="people-middle">Middle Name</label>
+            <input class="people" type="text" id="people-middle" />
+            <div class="clear"></div>
+
+            <label for="people-suffix">Suffix</label>
+            <input class="people" type="text" id="people-suffix" />
+            <div class="clear"></div>
+
+            <!-- <label for="event-venue">Venue</label>
+            <select class="event" name="event-venue" id="event-venue" data-domain="venues-name"></select>
+            <div class="clear"></div> -->
+
+            <label for="people-phone">Phone</label>
+            <input class="people" type="text" id="people-phone" />
+            <div class="clear"></div>
+
+            <label for="people-email">Email</label>
+            <input class="people" type="text" id="people-email" />
+            <div class="clear"></div>
+
+            <label for="people-dob">Date of Birth</label>
+            <input class="people" type="text" id="people-dob" />
+            <div class="clear"></div>
+
+            <label for="people-description">Description</label>
+            <textarea class="event" type="text" id="people-description"></textarea>
+            <div class="clear"></div>
+
+            <button type="button" class="submitButton" id="submit-event">Save</button>
+
+        </div>
+        <div class="clear"></div>
+    </div>
+    <!-- End Event Manager -->
 
 </body>
+
 </html>
