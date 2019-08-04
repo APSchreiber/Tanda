@@ -19,6 +19,20 @@ circles_cols = ('name', 'start', 'months', 'due', 'loan', 'capacity', 'descripti
 
 ############################################
 
+### View Models ###
+
+class Circle_vm:
+  def __init__(name, start, months, due, loan, capacity):
+    self.name = name
+    self.start = start
+    self.months = months
+    self.due = due
+    self.loan = loan
+    self.capacity = capacity
+
+
+############################################
+
 def check(username, password):
   if username == password:
     return True
@@ -230,6 +244,20 @@ def r_places(id):
   return {"success": True}
 
 ### Circles ###
+
+@route('/circle/<id>')
+def circle_details(id):
+
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("SELECT * FROM circles WHERE id = ?", id)
+  result = c.fetchall()
+  c.close()
+
+  item = dict_builder(("id",) + circles_cols, result[0])
+
+  return template('tpl/circle', item)
+
 
 @route('/list_circles/<format>')
 def listCircles(format):
