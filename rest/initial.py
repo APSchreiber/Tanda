@@ -12,10 +12,13 @@ con.execute("INSERT INTO places (address1, city, state, zip, country) VALUES ('1
 
 # Circles
 con.execute("CREATE TABLE circles (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, start TEXT, months INTEGER, due INTEGER, loan INTEGER, capacity INTEGER, description TEXT, comments TEXT)")
+con.execute("INSERT INTO circles (name, start, months, due, loan, capacity) VALUES ('The First Circle', 9/9/19, 12, 15, 1200, 12)")
+
 con.execute("CREATE TABLE circles_people (circleid INTEGER NOT NULL, peopleid INTEGER NOT NULL, payout_order INTEGER, distribution TEXT, PRIMARY KEY(circleid, peopleid))")
 
 # Accounts
 con.execute("CREATE TABLE accounts (id INTEGER PRIMARY KEY AUTOINCREMENT, accountno TEXT, comments TEXT, person INTEGER, FOREIGN KEY(person) REFERENCES people(id))")
+con.execute("INSERT INTO accounts (accountno, person) VALUES ('12345', 1)")
 
 # Payments
 con.execute("CREATE TABLE payments (id INTEGER PRIMARY KEY AUTOINCREMENT, amount INTEGER NOT NULL, date TEXT, person INTEGER, account INTEGER, circle INTEGER, FOREIGN KEY(account) REFERENCES accounts(id))")

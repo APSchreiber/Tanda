@@ -13,6 +13,7 @@ db_name = 'tanda.db'
 
 people_cols = ('eto', 'first', 'last', 'middle', 'suffix', 'email', 'phone', 'dob', 'description')
 places_cols = ('address1', 'address2', 'city', 'state', 'zip', 'country', 'description', 'comments')
+circles_cols = ('name', 'start', 'months', 'due', 'loan', 'capacity', 'description', 'comments')
 
 ############################################
 
@@ -163,7 +164,6 @@ def r_people(id):
   
   return {"success": True} 
 
-
 ### Places ###
 
 @route('/list_places/<format>')
@@ -223,6 +223,70 @@ def r_places(id):
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
   c.execute("DELETE FROM places WHERE id = ?", (id,))
+  conn.commit()
+  c.close()
+  
+  return {"success": True}
+
+### Circles ###
+
+@route('/list_circles/<format>')
+def listCircles(format):
+
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("SELECT * FROM circles")
+  result = c.fetchall()
+  c.close()
+  response = {}
+  response["items"] = []
+  for r in result:
+    item = dict_builder(("id",) + circles_cols, r)
+    response["items"].append(item)
+  
+  if format == 'table':
+    return template('tpl/item_table', items=response["items"])
+  
+  return response
+
+@route('/add_circles', method='POST')
+def add_circles():
+  data = request.json
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  sql = build_insert(circles_cols, "circles", request.json)
+  c.execute(sql[0], sql[1])
+  conn.commit()
+  
+  return {"success": True}
+
+@route('/circles/<id>', method='GET')
+def circles(id):
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute(build_select(circles_cols, 'circles', "id = ?"), (id,))
+  result = c.fetchall()
+  c.close()
+  
+  return response_dict(result, circles_cols)
+  
+@route('/circles/<id>', method='POST')
+def edit_circles(id):
+  data = request.json
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  sql = build_update(circles_cols, "circles", data, id)
+  c.execute(sql)
+  conn.commit()
+  
+  return {"success": True}
+
+@route('/r_circles/<id>', method='GET')
+@auth_basic(check)
+def r_circles(id):
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("DELETE FROM circles WHERE id = ?", (id,))
   conn.commit()
   c.close()
   
