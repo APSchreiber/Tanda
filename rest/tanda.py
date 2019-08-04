@@ -258,6 +258,22 @@ def circle_details(id):
 
   return template('tpl/circle', item)
 
+@route('/circles')
+def circles():
+
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("SELECT * FROM circles")
+  result = c.fetchall()
+  c.close()
+  response = {}
+  response["items"] = []
+  for r in result:
+    item = dict_builder(("id",) + circles_cols, r)
+    response["items"].append(item)
+
+  return template('tpl/circles', items=response["items"])
+
 
 @route('/list_circles/<format>')
 def listCircles(format):

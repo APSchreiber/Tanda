@@ -27,6 +27,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/DataTables/datatables.min.js"></script>
     <script src="/static/config.json.js"></script>
+    <script src="/static/js/tables.js"></script>
 
 </head>
 
@@ -36,11 +37,11 @@
         <div class="overlay hidden"></div>
 
         <div class="topnav">
-            <a href="#home">home</a>
-            <a href="#circles">circles</a>
-            <a class="active" href="/baker">people</a>
-            <a href="#places">places</a>
-            <a href="#settings">settings</a>
+            <a class="active" href="/baker">home</a>
+            <a href="/circles">circles</a>
+            <a href="/people">people</a>
+            <a href="/places">places</a>
+            <a href="/settings">settings</a>
         </div>
 
         {{!base}}
