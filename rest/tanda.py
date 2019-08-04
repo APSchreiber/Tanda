@@ -12,6 +12,7 @@ from bottle import template
 db_name = 'tanda.db'
 
 people_cols = ('eto', 'first', 'last', 'middle', 'suffix', 'email', 'phone', 'dob', 'description')
+places_cols = ('address1', 'address2', 'city', 'state', 'zip', 'country', 'description', 'comments')
 
 ############################################
 
@@ -161,6 +162,72 @@ def r_people(id):
   c.close()
   
   return {"success": True} 
+
+
+### Places ###
+
+@route('/list_places/<format>')
+def listPlaces(format):
+
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("SELECT * FROM places")
+  result = c.fetchall()
+  c.close()
+  response = {}
+  response["items"] = []
+  for r in result:
+    item = dict_builder(("id",) + places_cols, r)
+    response["items"].append(item)
+  
+  if format == 'table':
+    return template('tpl/item_table', items=response["items"])
+  
+  return response
+
+@route('/add_places', method='POST')
+def add_places():
+  data = request.json
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  sql = build_insert(places_cols, "places", request.json)
+  c.execute(sql[0], sql[1])
+  conn.commit()
+  
+  return {"success": True}
+
+@route('/places/<id>', method='GET')
+def places(id):
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute(build_select(places_cols, 'places', "id = ?"), (id,))
+  result = c.fetchall()
+  c.close()
+  
+  return response_dict(result, places_cols)
+  
+@route('/places/<id>', method='POST')
+def edit_places(id):
+  data = request.json
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  sql = build_update(places_cols, "places", data, id)
+  c.execute(sql)
+  conn.commit()
+  
+  return {"success": True}
+
+@route('/r_places/<id>', method='GET')
+@auth_basic(check)
+def r_places(id):
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("DELETE FROM places WHERE id = ?", (id,))
+  conn.commit()
+  c.close()
+  
+  return {"success": True} 
+
 
 ############################################
   
