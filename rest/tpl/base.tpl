@@ -38,9 +38,9 @@
 
         <div class="topnav">
             <a class="active" href="/baker">home</a>
-            <a href="/circles">circles</a>
-            <a href="/people">people</a>
-            <a href="/places">places</a>
+            <a href="/circles/manage">circles</a>
+            <a href="/people/manage">people</a>
+            <a href="/places/manage">places</a>
             <a href="/settings">settings</a>
         </div>
 

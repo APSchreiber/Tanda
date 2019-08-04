@@ -1,4 +1,4 @@
-% rebase('tpl/base.tpl', title='Page Title')
+% rebase('tpl/base.tpl', title='Tanda - Circles')
 <div id="circles" class="managerPane">
     <h1>Circles</h1>
 

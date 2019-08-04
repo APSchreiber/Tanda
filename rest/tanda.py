@@ -117,6 +117,22 @@ def root_static():
 
 ### People ###
 
+@route('/people/manage')
+def people_manage():
+
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("SELECT id, first, last, middle, suffix, email, phone, dob, description, address1, address2, city, state, zip, country FROM people_vw")
+  result = c.fetchall()
+  c.close()
+  response = {}
+  response["items"] = []
+  for r in result:
+    item = dict_builder(("id",) + people_vw_cols, r)
+    response["items"].append(item)
+
+  return template('tpl/people', items=response["items"])
+
 @route('/list_people/<format>')
 def listPeople(format):
 
@@ -180,6 +196,22 @@ def r_people(id):
   return {"success": True} 
 
 ### Places ###
+
+@route('/places/manage')
+def places_manage():
+
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("SELECT * FROM places")
+  result = c.fetchall()
+  c.close()
+  response = {}
+  response["items"] = []
+  for r in result:
+    item = dict_builder(("id",) + places_cols, r)
+    response["items"].append(item)
+
+  return template('tpl/places', items=response["items"])
 
 @route('/list_places/<format>')
 def listPlaces(format):
@@ -258,8 +290,8 @@ def circle_details(id):
 
   return template('tpl/circle', item)
 
-@route('/circles')
-def circles():
+@route('/circles/manage')
+def circles_manage():
 
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
@@ -273,7 +305,6 @@ def circles():
     response["items"].append(item)
 
   return template('tpl/circles', items=response["items"])
-
 
 @route('/list_circles/<format>')
 def listCircles(format):
