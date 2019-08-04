@@ -34,6 +34,17 @@ $(document).ready(function(){
             deleteItem(node, ids[0]);
           }
         }
+      },
+      {
+        text: "Details",
+        action: function ( e, dt, node, config ) {
+          var ids = getSelectedIds(dt);
+          if (ids.length == 0 || ids.length > 1) {
+            alert("Please select a single row to edit.");
+            return;
+          }
+          goToDetails(node, ids[0]);
+        }
       }
     ]
   };
@@ -128,21 +139,21 @@ $(document).ready(function(){
     return ids;
   }
   
-  /********** Top Nav **********/
-  $(".topnav a").click(function() {
-    var tab = $(this).html();
+  // /********** Top Nav **********/
+  // $(".topnav a").click(function() {
+  //   var tab = $(this).html();
     
-    // handle nav highlighting
-    $(".topnav a").removeClass("active");
-    $(this).addClass("active");
+  //   // handle nav highlighting
+  //   $(".topnav a").removeClass("active");
+  //   $(this).addClass("active");
     
-    // handle div showing
-    $(".managerPane").addClass("hidden");
-    $("#" + tab).removeClass("hidden");
+  //   // handle div showing
+  //   $(".managerPane").addClass("hidden");
+  //   $("#" + tab).removeClass("hidden");
     
-    displayItems(tab);
+  //   displayItems(tab);
     
-  });
+  // });
   
   /********** Forms control **********/
 
@@ -156,6 +167,10 @@ $(document).ready(function(){
         closeForms();
       }
     });
+  }
+
+  function goToDetails(node, id) {
+    window.location.href("/circle/1");
   }
   
   function addEditItem(node, id) {
@@ -256,7 +271,7 @@ $(document).ready(function(){
 	/********** Init **********/
 	
 	// Init
-	displayItems("people");
+	// displayItems("people");
 	
 	/********** Events form **********/
   
