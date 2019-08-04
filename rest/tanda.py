@@ -11,7 +11,7 @@ from bottle import template
 
 db_name = 'tanda.db'
 
-people_cols = ('first', 'last', 'middle', 'suffix', 'email', 'phone', 'dob', 'description')
+people_cols = ('eto', 'first', 'last', 'middle', 'suffix', 'email', 'phone', 'dob', 'description')
 
 ############################################
 
@@ -99,12 +99,12 @@ def root_static():
 
 ### People ###
 
-@route('/people/<format>')
+@route('/list_people/<format>')
 def listPeople(format):
 
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
-  c.execute("SELECT id, first, last, middle, suffix, email, phone, dob, description FROM people")
+  c.execute("SELECT id, eto, first, last, middle, suffix, email, phone, dob, description FROM people")
   #c.execute("SELECT * FROM people")
   result = c.fetchall()
   c.close()
@@ -120,7 +120,7 @@ def listPeople(format):
   return response
 
 @route('/add_people', method='POST')
-def add_venue():
+def add_people():
   data = request.json
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
@@ -129,6 +129,38 @@ def add_venue():
   conn.commit()
   
   return {"success": True}
+
+@route('/people/<id>', method='GET')
+def people(id):
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute(build_select(people_cols, 'people', "id = ?"), (id,))
+  result = c.fetchall()
+  c.close()
+  
+  return response_dict(result, people_cols)
+  
+@route('/people/<id>', method='POST')
+def edit_people(id):
+  data = request.json
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  sql = build_update(people_cols, "people", data, id)
+  c.execute(sql)
+  conn.commit()
+  
+  return {"success": True}
+
+@route('/r_people/<id>', method='GET')
+@auth_basic(check)
+def r_people(id):
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("DELETE FROM people WHERE id = ?", (id,))
+  conn.commit()
+  c.close()
+  
+  return {"success": True} 
 
 ############################################
   

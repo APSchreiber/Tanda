@@ -278,7 +278,7 @@ $(document).ready(function(){
 	function displayItems(category) {
 		$.ajax({
 			type: "GET",
-			url: "/" + category + "/table",
+			url: "/list_" + category + "/table",
 			success: function (r) {
 				$("#" + category + "-table").html(r);
         

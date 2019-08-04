@@ -158,13 +158,13 @@ html {
       font-family: 'Quicksand', sans-serif;
       text-align: left;
       border: 1px solid #555;
-      width: 60%;
+      width: 40%;
       padding: 6px;
       margin: 0 auto;
     position: absolute;
     top: 20%;
     left: 50%;
-    margin-left: -30%;
+    margin-left: -20%;
     z-index: 999;
     background-color: white;
   }
