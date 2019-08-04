@@ -11,7 +11,9 @@ from bottle import template
 
 db_name = 'tanda.db'
 
-people_cols = ('eto', 'first', 'last', 'middle', 'suffix', 'email', 'phone', 'dob', 'description')
+people_cols = ('eto', 'first', 'last', 'middle', 'suffix', 'email', 'phone', 'dob', 'address', 'description')
+people_vw_cols = ('first', 'last', 'middle', 'suffix', 'email', 'phone', 'dob', 'description', 'address1', 'address2', 'city', 'state', 'zip', 'country')
+
 places_cols = ('address1', 'address2', 'city', 'state', 'zip', 'country', 'description', 'comments')
 circles_cols = ('name', 'start', 'months', 'due', 'loan', 'capacity', 'description', 'comments')
 
@@ -106,14 +108,13 @@ def listPeople(format):
 
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
-  c.execute("SELECT id, eto, first, last, middle, suffix, email, phone, dob, description FROM people")
-  #c.execute("SELECT * FROM people")
+  c.execute("SELECT id, first, last, middle, suffix, email, phone, dob, description, address1, address2, city, state, zip, country FROM people_vw")
   result = c.fetchall()
   c.close()
   response = {}
   response["items"] = []
   for r in result:
-    item = dict_builder(("id",) + people_cols, r)
+    item = dict_builder(("id",) + people_vw_cols, r)
     response["items"].append(item)
   
   if format == 'table':

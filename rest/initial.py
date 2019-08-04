@@ -24,7 +24,7 @@ con.execute("INSERT INTO accounts (accountno, person) VALUES ('12345', 1)")
 con.execute("CREATE TABLE payments (id INTEGER PRIMARY KEY AUTOINCREMENT, amount INTEGER NOT NULL, date TEXT, person INTEGER, account INTEGER, circle INTEGER, FOREIGN KEY(account) REFERENCES accounts(id))")
 
 # Views
-con.execute("CREATE VIEW people_vw AS SELECT people.id, people.first, people.last, people.middle, people.suffix, people.email, people.phone, people.address, people.description, people.dob, strftime('%m/%d/%Y', people.dob) as dob_format, places.address1, places.address2, places.city, places.state, places.zip, places.country, places.description as place_description FROM people INNER JOIN places on places.id = people.address")
+con.execute("CREATE VIEW people_vw AS SELECT people.id, people.eto, people.first, people.last, people.middle, people.suffix, people.email, people.phone, people.description, people.dob, strftime('%m/%d/%Y', people.dob) as dob_format, people.address, places.address1, places.address2, places.city, places.state, places.zip, places.country, places.description as place_description FROM people INNER JOIN places on places.id = people.address")
 
 
 con.commit()
