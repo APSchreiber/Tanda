@@ -382,7 +382,12 @@ def r_circles(id):
   conn.commit()
   c.close()
   
-  return {"success": True} 
+  return {"success": True}
+
+
+@route('/circles/addperson/<id>/<personid>')
+def circles_add_people(id, personid):
+  
 
 
 ############################################
