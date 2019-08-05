@@ -144,7 +144,8 @@ $(function () {
             },
 
             goToDetails: function (node, id) {
-                window.location.href("/circle/1");
+                var category = $(node).closest(".managerPane").attr("id");
+                window.location = "/" + category + "/details/" + id
             },
 
             addEditItem: function (node, id) {
