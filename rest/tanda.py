@@ -7,6 +7,12 @@ import sqlite3, json, nltk
 from bottle import *
 from bottle import template
 
+
+############################################
+
+bottle.debug(True)
+#bottle.TEMPLATES.clear()
+
 ############################################
 
 db_name = 'tanda.db'
