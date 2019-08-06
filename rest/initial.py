@@ -15,6 +15,7 @@ con.execute("CREATE TABLE circles (id INTEGER PRIMARY KEY AUTOINCREMENT, name TE
 con.execute("INSERT INTO circles (name, start, months, due, loan, capacity) VALUES ('The First Circle', 9/9/19, 12, 15, 1200, 12)")
 
 con.execute("CREATE TABLE circles_people (circleid INTEGER NOT NULL, peopleid INTEGER NOT NULL, payout_order INTEGER, distribution TEXT, PRIMARY KEY(circleid, peopleid))")
+con.execute("INSERT INTO circles_people (circleid, peopleid, payout_order, distribution) VALUES (1, 1, 1, 'full')")
 
 # Accounts
 con.execute("CREATE TABLE accounts (id INTEGER PRIMARY KEY AUTOINCREMENT, accountno TEXT, comments TEXT, person INTEGER, FOREIGN KEY(person) REFERENCES people(id))")

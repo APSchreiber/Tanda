@@ -155,12 +155,12 @@ html {
   }
   
   .inputForm {
-      font-family: 'Quicksand', sans-serif;
-      text-align: left;
-      border: 1px solid #555;
-      width: 40%;
-      padding: 6px;
-      margin: 0 auto;
+    font-family: 'Quicksand', sans-serif;
+    text-align: left;
+    border: 1px solid #555;
+    width: 40%;
+    padding: 6px;
+    margin: 0 auto;
     position: absolute;
     top: 20%;
     left: 50%;
@@ -243,4 +243,40 @@ html {
 .dt-button {
   margin-top: 4px;
   padding: 2px;
+}
+
+
+
+/********** about container **********/
+
+.unselectable {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.aboutContainer {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  display: inline-block;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.aboutArrow {
+  font-weight: bold;
+  font-size: 4.3em;
+  float: left;
+  cursor: pointer;
+  font-family: 'Cabin Sketch', cursive;
+  color: #7f3f98;
+  width: 20%;
+}
+
+
+#aboutContent {
+  float: left;
+  width: 60%;
 }

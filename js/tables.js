@@ -276,7 +276,7 @@ $(function () {
                     }
                     $("#venue-state").append(option);
                 }
-                
+
                 // Set up country
                 if (window.tanda.tables.config.geo.defaultCountry) {
                     $("#venue-country").val(window.tanda.tables.config.geo.defaultCountry)
