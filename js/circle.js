@@ -18,6 +18,13 @@ $(function () {
                     }
                 });
             });
+
+            $('.data-table').DataTable({
+                select: true,
+                buttons: window.tanda.tables.dtConfig.buttons,
+                dom: "lfrtBip",
+                destroy: true,
+            });
         }
     }
     window.tanda.circle.init()
