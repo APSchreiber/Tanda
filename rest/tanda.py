@@ -28,14 +28,16 @@ circles_cols = ('name', 'start', 'months', 'due', 'loan', 'capacity', 'descripti
 ### View Models ###
 
 class Circle_vm:
-  def __init__(name, start, months, due, loan, capacity):
+  def __init__(self, id, name, start, months, due, loan, capacity, participants, people_list):
+    self.id = id
     self.name = name
     self.start = start
     self.months = months
     self.due = due
     self.loan = loan
     self.capacity = capacity
-
+    self.participants = participants
+    self.people_list = people_list
 
 ############################################
 
@@ -296,17 +298,29 @@ def r_places(id):
 def circles_details(id):
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
+
   c.execute("SELECT * FROM circles WHERE id = ?", (id,))
-  result = c.fetchall()
-  c.close()
+  result_circles = c.fetchall()
+  
+  c.execute("SELECT * FROM participants_vw WHERE circleid = ?", (id,))
+  result_participants = c.fetchall()
+
+  c.execute("SELECT id, first, last FROM people")
+  result_people = c.fetchall()
+
+  conn.close()
   response = {}
+
   response["items"] = []
-  for r in result:
+  for r in result_circles:
     item = dict_builder(("id",) + circles_cols, r)
     response["items"].append(item)
 
-  vm = dict(response["items"][0])
+  c = dict(response["items"][0])
+  vm = Circle_vm(c['id'], c['name'], c['start'], c['months'], c['due'], c['loan'], c['capacity'], result_participants, result_people)
+
   return template('tpl/circle', model=vm)
+
 
 
 @route('/circles/manage')
@@ -393,7 +407,12 @@ def r_circles(id):
 
 @route('/circles/addperson/<id>/<personid>')
 def circles_add_people(id, personid):
-  pass
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("INSERT INTO circles_people (circleid, peopleid) VALUES (?, ?)", (id, personid))
+  conn.commit()
+  conn.close()
+  return {"success": True}
   
 
 

@@ -4,7 +4,7 @@ con = sqlite3.connect('tanda.db')
 
 # People
 con.execute("CREATE TABLE people (id INTEGER PRIMARY KEY AUTOINCREMENT, eto INTEGER, first TEXT, last TEXT NOT NULL, middle Text, suffix TEXT, email TEXT, phone TEXT, description TEXT, comments TEXT, dob TEXT, address INTEGER, FOREIGN KEY(address) REFERENCES places(id))")
-con.execute("INSERT INTO people (last, first) VALUES ('Stuart', 'Emily')")
+con.execute("INSERT INTO people (last, first, address) VALUES ('Stuart', 'Emily', 1)")
 
 # Places
 con.execute("CREATE TABLE places (id INTEGER PRIMARY KEY AUTOINCREMENT, address1 TEXT, address2 TEXT, city TEXT, state TEXT, zip TEXT, country TEXT, description TEXT, comments TEXT)")
@@ -26,6 +26,6 @@ con.execute("CREATE TABLE payments (id INTEGER PRIMARY KEY AUTOINCREMENT, amount
 
 # Views
 con.execute("CREATE VIEW people_vw AS SELECT people.id, people.eto, people.first, people.last, people.middle, people.suffix, people.email, people.phone, people.description, people.dob, strftime('%m/%d/%Y', people.dob) as dob_format, people.address, places.address1, places.address2, places.city, places.state, places.zip, places.country, places.description as place_description FROM people INNER JOIN places on places.id = people.address")
-
+con.execute("CREATE VIEW participants_vw AS SELECT circles_people.circleid, circles_people.peopleid, people.first, people.last, people.middle, people.suffix, circles.name, circles.loan FROM circles_people JOIN people on people.id = circles_people.peopleid JOIN circles on circles.id = circles_people.circleid")
 
 con.commit()
