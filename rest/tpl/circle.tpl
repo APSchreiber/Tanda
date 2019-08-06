@@ -9,6 +9,10 @@
 % end
 </ul>
 
+<div id="people-table">
+    % include('tpl/item_table.tpl', items=items)
+</div>
+
 <br/><br/>
 <select id="addPersonSelect">
     <option></option>

@@ -305,6 +305,15 @@ def circles_details(id):
   c.execute("SELECT * FROM participants_vw WHERE circleid = ?", (id,))
   result_participants = c.fetchall()
 
+  c.execute("SELECT id, first, last, middle, suffix, email, phone, dob, description, address1, address2, city, state, zip, country FROM people_vw")
+  result_people_table = c.fetchall()
+  response = {}
+  response["items"] = []
+  for r in result_people_table:
+    item = dict_builder(("id",) + people_vw_cols, r)
+    response["items"].append(item)
+
+
   c.execute("SELECT id, first, last FROM people")
   result_people = c.fetchall()
 
@@ -319,7 +328,7 @@ def circles_details(id):
   c = dict(response["items"][0])
   vm = Circle_vm(c['id'], c['name'], c['start'], c['months'], c['due'], c['loan'], c['capacity'], result_participants, result_people)
 
-  return template('tpl/circle', model=vm)
+  return template('tpl/circle', model=vm, items=response["items"])
 
 
 
