@@ -3,7 +3,7 @@ $(function () {
     window.tanda.circle = window.tanda.circle ||
     {
         init: function() {
-            $("#addPerson").click(function(){
+            $("#addCirclesPeople").click(function(){
                 var circleId = $("#circleId").data("id");
                 var personId = $("#addPersonSelect").val();
                 $.ajax({

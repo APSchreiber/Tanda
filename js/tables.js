@@ -151,7 +151,7 @@ $(function () {
             addEditItem: function (node, id) {
                 var category = $(node).closest(".managerPane").attr("id");
 
-                alert(category);
+                //alert(category);
 
                 // show the form
                 $(".overlay").removeClass("hidden");

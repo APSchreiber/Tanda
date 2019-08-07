@@ -308,19 +308,7 @@ def circles_details(id):
   c.execute("SELECT circleid, first, last FROM participants_vw WHERE circleid = ?", (id,))
   result_participants = c.fetchall()
 
-<<<<<<< HEAD
   # get available people
-=======
-  c.execute("SELECT id, first, last, middle, suffix, email, phone, dob, description, address1, address2, city, state, zip, country FROM people_vw")
-  result_people_table = c.fetchall()
-  table_response = {}
-  table_response["items"] = []
-  for r in result_people_table:
-    item = dict_builder(("id",) + people_vw_cols, r)
-    table_response["items"].append(item)
-
-
->>>>>>> 89c3f1184869ca5a8245e31edae3f2aaf9ca291f
   c.execute("SELECT id, first, last FROM people")
   result_people = c.fetchall()
 
@@ -332,11 +320,7 @@ def circles_details(id):
     item = dict_builder(("circleid", "first", "last"), r)
     bag_participants["items"].append(item)
 
-<<<<<<< HEAD
   vm = Circle_vm(circle[0], circle[1], circle[2], circle[3], circle[4], circle[5], circle[6], result_participants, result_people)
-=======
-  return template('tpl/circle', model=vm, items=table_response["items"])
->>>>>>> 89c3f1184869ca5a8245e31edae3f2aaf9ca291f
 
   return template('tpl/circle', model=vm, items=bag_participants["items"])
 
