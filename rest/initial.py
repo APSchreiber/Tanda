@@ -11,8 +11,8 @@ con.execute("CREATE TABLE places (id INTEGER PRIMARY KEY AUTOINCREMENT, address1
 con.execute("INSERT INTO places (address1, city, state, zip, country) VALUES ('12 Ola Ave.', 'St. Louis', 'MO', '63119', 'USA')")
 
 # Circles
-con.execute("CREATE TABLE circles (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, start TEXT, months INTEGER, due INTEGER, loan INTEGER, capacity INTEGER, description TEXT, comments TEXT)")
-con.execute("INSERT INTO circles (name, start, months, due, loan, capacity) VALUES ('The First Circle', 9/9/19, 12, 15, 1200, 12)")
+con.execute("CREATE TABLE circles (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, start TEXT, months INTEGER, loan INTEGER, capacity INTEGER, description TEXT, comments TEXT)")
+con.execute("INSERT INTO circles (name, start, months, loan, capacity) VALUES ('The First Circle', 9/9/19, 12, 1200, 12)")
 
 con.execute("CREATE TABLE circles_people (circleid INTEGER NOT NULL, peopleid INTEGER NOT NULL, payout_order INTEGER, distribution TEXT, PRIMARY KEY(circleid, peopleid))")
 con.execute("INSERT INTO circles_people (circleid, peopleid, payout_order, distribution) VALUES (1, 1, 1, 'full')")
@@ -27,5 +27,6 @@ con.execute("CREATE TABLE payments (id INTEGER PRIMARY KEY AUTOINCREMENT, amount
 # Views
 con.execute("CREATE VIEW people_vw AS SELECT people.id, people.eto, people.first, people.last, people.middle, people.suffix, people.email, people.phone, people.description, people.dob, strftime('%m/%d/%Y', people.dob) as dob_format, people.address, places.address1, places.address2, places.city, places.state, places.zip, places.country, places.description as place_description FROM people INNER JOIN places on places.id = people.address")
 con.execute("CREATE VIEW participants_vw AS SELECT circles_people.circleid, circles_people.peopleid, people.first, people.last, people.middle, people.suffix, circles.name, circles.loan FROM circles_people JOIN people on people.id = circles_people.peopleid JOIN circles on circles.id = circles_people.circleid")
+con.execute("CREATE VIEW circles_vw AS SELECT circles.id, circles.name, (date(circles.start)), (date(circles.start, '+' || circles.months || ' month')), circles.loan, circles.capacity, COUNT(circles_people.peopleid) FROM circles_people LEFT JOIN circles on circles.id = circles_people.circleid GROUP BY circles.id")
 
 con.commit()
