@@ -2,6 +2,7 @@
 <span id="circleId" data-id="{{model.id}}" data-enrolled="{{model.enrolled}}" data-percent="{{round((model.enrolled * 100.0) / model.capacity)}}"></span>
 <h1>{{model.name}}</h1>
 
+<<<<<<< HEAD
 <h2>Circle Information</h2>
 There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. There are {{model.capacity - model.enrolled}} seats left!
 
@@ -12,6 +13,8 @@ There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. Th
 <div id="people-table">
     % include('tpl/item_table.tpl', items=items)
 </div>
+=======
+>>>>>>> 89c3f1184869ca5a8245e31edae3f2aaf9ca291f
 
 <br/><br/>
 <select id="addPersonSelect">
@@ -21,8 +24,31 @@ There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. Th
     % end
 </select>
 
-<button id="addPerson" type="button">Add</button>
+<button id="addCirclesPeople" type="button">Add</button>
 
+<div id="circles_people" class="managerPane">
+
+    <h2>People</h2>
+    <div id="circles_people-table">
+        % include('tpl/item_table.tpl', items=items)
+    </div>
+
+
+    <div class="inputForm hidden" id="editForm-circles_people">
+
+        <h2>People</h2>
+        <div class="closeX">x</div>
+        <div class="clear"></div>
+
+        <button type="button" class="submitButton" id="submit-circles_people">Save</button>
+        <br /><br />
+
+    </div>
+    <div class="clear"></div>
+
+</div>
+
+<<<<<<< HEAD
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
 <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200' rel='stylesheet' type='text/css'>
@@ -152,3 +178,7 @@ There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. Th
     <script src="/static/config.json.js"></script>
     <script src="/static/js/tables.js"></script>
 <script src="/static/js/circle.js"></script>
+=======
+<script src="/static/js/tables.js"></script>
+<script src="/static/js/circle.js"></script>
+>>>>>>> 89c3f1184869ca5a8245e31edae3f2aaf9ca291f
