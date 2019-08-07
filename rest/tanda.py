@@ -21,21 +21,21 @@ people_cols = ('eto', 'first', 'last', 'middle', 'suffix', 'email', 'phone', 'do
 people_vw_cols = ('first', 'last', 'middle', 'suffix', 'email', 'phone', 'dob', 'description', 'address1', 'address2', 'city', 'state', 'zip', 'country')
 
 places_cols = ('address1', 'address2', 'city', 'state', 'zip', 'country', 'description', 'comments')
-circles_cols = ('name', 'start', 'months', 'due', 'loan', 'capacity', 'description', 'comments')
+circles_cols = ('name', 'start', 'months', 'loan', 'capacity', 'description', 'comments')
 
 ############################################
 
 ### View Models ###
 
 class Circle_vm:
-  def __init__(self, id, name, start, months, due, loan, capacity, participants, people_list):
+  def __init__(self, id, name, start, finish, loan, capacity, enrolled, participants, people_list):
     self.id = id
     self.name = name
     self.start = start
-    self.months = months
-    self.due = due
+    self.finish = finish
     self.loan = loan
     self.capacity = capacity
+    self.enrolled = enrolled
     self.participants = participants
     self.people_list = people_list
 
@@ -299,37 +299,30 @@ def circles_details(id):
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
 
-  c.execute("SELECT * FROM circles WHERE id = ?", (id,))
+  # get the circle
+  c.execute("SELECT id, name, start, finish, loan, capacity, enrolled FROM circles_vw WHERE id = ?", (id,))
   result_circles = c.fetchall()
+  circle = result_circles[0]
   
-  c.execute("SELECT * FROM participants_vw WHERE circleid = ?", (id,))
+  # get participants in circle
+  c.execute("SELECT circleid, first, last FROM participants_vw WHERE circleid = ?", (id,))
   result_participants = c.fetchall()
 
-  c.execute("SELECT id, first, last, middle, suffix, email, phone, dob, description, address1, address2, city, state, zip, country FROM people_vw")
-  result_people_table = c.fetchall()
-  response = {}
-  response["items"] = []
-  for r in result_people_table:
-    item = dict_builder(("id",) + people_vw_cols, r)
-    response["items"].append(item)
-
-
+  # get available people
   c.execute("SELECT id, first, last FROM people")
   result_people = c.fetchall()
 
   conn.close()
-  response = {}
 
-  response["items"] = []
-  for r in result_circles:
-    item = dict_builder(("id",) + circles_cols, r)
-    response["items"].append(item)
+  bag_participants = {}
+  bag_participants["items"] = []
+  for r in result_participants:
+    item = dict_builder(("circleid", "first", "last"), r)
+    bag_participants["items"].append(item)
 
-  c = dict(response["items"][0])
-  vm = Circle_vm(c['id'], c['name'], c['start'], c['months'], c['due'], c['loan'], c['capacity'], result_participants, result_people)
+  vm = Circle_vm(circle[0], circle[1], circle[2], circle[3], circle[4], circle[5], circle[6], result_participants, result_people)
 
-  return template('tpl/circle', model=vm, items=response["items"])
-
+  return template('tpl/circle', model=vm, items=bag_participants["items"])
 
 
 @route('/circles/manage')
