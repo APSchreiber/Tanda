@@ -28,12 +28,12 @@ con.execute("INSERT INTO payments (amount, date, person, account, circle) VALUES
 # Views
 con.execute("CREATE VIEW people_vw AS SELECT people.id, people.eto, people.first, people.last, people.middle, people.suffix, people.email, people.phone, people.description, people.dob, strftime('%m/%d/%Y', people.dob) as dob_format, people.address, places.address1, places.address2, places.city, places.state, places.zip, places.country, places.description as place_description FROM people INNER JOIN places on places.id = people.address")
 
-con.execute("CREATE VIEW participants_vw AS SELECT circles_people.circleid, circles_people.peopleid, people.first, people.last, people.middle, people.suffix, circles.name, circles.loan FROM circles_people JOIN people on people.id = circles_people.peopleid JOIN circles on circles.id = circles_people.circleid")
+# con.execute("CREATE VIEW participants_vw AS SELECT circles_people.circleid, circles_people.peopleid, people.first, people.last, people.middle, people.suffix, circles.name, circles.loan FROM circles_people JOIN people on people.id = circles_people.peopleid JOIN circles on circles.id = circles_people.circleid")
 
 con.execute("CREATE VIEW circles_vw AS SELECT circles.id, circles.name, (date(circles.start)) as start, (date(circles.start, '+' || circles.months || ' month')) as finish, circles.loan, circles.capacity, COUNT(circles_people.peopleid) as enrolled FROM circles_people LEFT JOIN circles on circles.id = circles_people.circleid GROUP BY circles.id")
 
 con.execute("CREATE VIEW accounts_vw AS SELECT accounts.id, accounts.accountno, COUNT(payments.id) as payments, SUM(payments.amount) as balance FROM payments JOIN accounts on payments.account = accounts.id GROUP BY accounts.id")
 
-con.execute("CREATE VIEW participants_details_vw AS SELECT people_vw.first, people_vw.last, circles_vw.name, SUM(payments.amount) as circle_balance FROM payments JOIN circles_vw ON payments.circle = circles_vw.id JOIN circles_people ON circles_vw.id = circles_people.circleid JOIN people_vw ON circles_people.peopleid = people_vw.id JOIN accounts ON people_vw.account = accounts.id")
+con.execute("CREATE VIEW participants_vw AS SELECT circles_people.circleid, circles_people.peopleid, people_vw.eto, people_vw.first, people_vw.last, people_vw.middle, people_vw.suffix,  people_vw.email, people_vw.phone, people_vw.dob, circles_vw.name, circles_vw.start, circles_vw.finish, circles_vw.capacity, circles_vw.enrolled, circles_people.payout_order, circles_people.distribution, SUM(payments.amount) as circle_balance FROM payments JOIN circles_vw ON payments.circle = circles_vw.id JOIN circles_people ON circles_vw.id = circles_people.circleid JOIN people_vw ON circles_people.peopleid = people_vw.id JOIN accounts ON people_vw.id = accounts.person")
 
 con.commit()
