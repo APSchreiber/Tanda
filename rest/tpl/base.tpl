@@ -41,6 +41,7 @@
             <a href="/circles/manage">circles</a>
             <a href="/people/manage">people</a>
             <a href="/places/manage">places</a>
+            <a href="/accounts/manage">accounts</a>
             <a href="/settings">settings</a>
         </div>
 

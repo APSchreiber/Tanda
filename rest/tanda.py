@@ -124,119 +124,39 @@ def root_static():
   return static_file('baker.html', root='../baker/')
 
 
-###### People ######
+#########################
+###### Accounts ######
+#########################
 
-@route('/people/manage')
-def people_manage():
+# Accounts Manager Page
+@route('/accounts/manage')
+def accounts_manage():
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
-  c.execute("SELECT id, first, last, middle, suffix, email, phone, dob, description, address1, address2, city, state, zip, country FROM people_vw")
+  c.execute("SELECT id, person, comments FROM accounts")
   result = c.fetchall()
   c.close()
   response = {}
   response["items"] = []
   for r in result:
-    item = dict_builder(("id",) + people_vw_cols, r)
+    item = dict_builder(("id", "person", "comments"), r)
     response["items"].append(item)
 
-  return template('tpl/people', items=response["items"])
+  return template('tpl/accounts', items=response["items"])
 
+# Return a listing of accounts
+@route('/list_accounts/<format>')
+def listAccounts(format):
 
-@route('/list_people/<format>')
-def listPeople(format):
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
-  c.execute("SELECT id, first, last, middle, suffix, email, phone, dob, description, address1, address2, city, state, zip, country FROM people_vw")
+  c.execute("SELECT id, person, comments FROM accounts")
   result = c.fetchall()
   c.close()
   response = {}
   response["items"] = []
   for r in result:
-    item = dict_builder(("id",) + people_vw_cols, r)
-    response["items"].append(item)
-  
-  if format == 'table':
-    return template('tpl/item_table', items=response["items"])
-  
-  return response
-
-
-@route('/add_people', method='POST')
-def add_people():
-  data = request.json
-  conn = sqlite3.connect(db_name)
-  c = conn.cursor()
-  sql = build_insert(people_cols, "people", request.json)
-  c.execute(sql[0], sql[1])
-  conn.commit()
-  
-  return {"success": True}
-
-
-@route('/people/<id>', method='GET')
-def people(id):
-  conn = sqlite3.connect(db_name)
-  c = conn.cursor()
-  c.execute(build_select(people_cols, 'people', "id = ?"), (id,))
-  result = c.fetchall()
-  c.close()
-  
-  return response_dict(result, people_cols)
-
-
-@route('/people/<id>', method='POST')
-def edit_people(id):
-  data = request.json
-  conn = sqlite3.connect(db_name)
-  c = conn.cursor()
-  sql = build_update(people_cols, "people", data, id)
-  c.execute(sql)
-  conn.commit()
-  
-  return {"success": True}
-
-
-@route('/r_people/<id>', method='GET')
-@auth_basic(check)
-def r_people(id):
-  conn = sqlite3.connect(db_name)
-  c = conn.cursor()
-  c.execute("DELETE FROM people WHERE id = ?", (id,))
-  conn.commit()
-  c.close()
-  
-  return {"success": True} 
-
-
-###### Places ######
-
-@route('/places/manage')
-def places_manage():
-  conn = sqlite3.connect(db_name)
-  c = conn.cursor()
-  c.execute("SELECT * FROM places")
-  result = c.fetchall()
-  c.close()
-  response = {}
-  response["items"] = []
-  for r in result:
-    item = dict_builder(("id",) + places_cols, r)
-    response["items"].append(item)
-
-  return template('tpl/places', items=response["items"])
-
-
-@route('/list_places/<format>')
-def listPlaces(format):
-  conn = sqlite3.connect(db_name)
-  c = conn.cursor()
-  c.execute("SELECT * FROM places")
-  result = c.fetchall()
-  c.close()
-  response = {}
-  response["items"] = []
-  for r in result:
-    item = dict_builder(("id",) + places_cols, r)
+    item = dict_builder(("id", "person", "comments"), r)
     response["items"].append(item)
   
   if format == 'table':
@@ -245,54 +165,9 @@ def listPlaces(format):
   return response
 
 
-@route('/add_places', method='POST')
-def add_places():
-  data = request.json
-  conn = sqlite3.connect(db_name)
-  c = conn.cursor()
-  sql = build_insert(places_cols, "places", request.json)
-  c.execute(sql[0], sql[1])
-  conn.commit()
-  
-  return {"success": True}
-
-
-@route('/places/<id>', method='GET')
-def places(id):
-  conn = sqlite3.connect(db_name)
-  c = conn.cursor()
-  c.execute(build_select(places_cols, 'places', "id = ?"), (id,))
-  result = c.fetchall()
-  c.close()
-  
-  return response_dict(result, places_cols)
-  
-
-@route('/places/<id>', method='POST')
-def edit_places(id):
-  data = request.json
-  conn = sqlite3.connect(db_name)
-  c = conn.cursor()
-  sql = build_update(places_cols, "places", data, id)
-  c.execute(sql)
-  conn.commit()
-  
-  return {"success": True}
-
-
-@route('/r_places/<id>', method='GET')
-@auth_basic(check)
-def r_places(id):
-  conn = sqlite3.connect(db_name)
-  c = conn.cursor()
-  c.execute("DELETE FROM places WHERE id = ?", (id,))
-  conn.commit()
-  c.close()
-  
-  return {"success": True}
-
-
+#########################
 ###### Circles ######
+#########################
 
 @route('/circles/details/<id>')
 def circles_details(id):
@@ -415,8 +290,189 @@ def circles_add_people(id, personid):
   conn.commit()
   conn.close()
   return {"success": True}
-  
 
+
+#########################
+###### People ######
+#########################
+
+# People Manager Page
+@route('/people/manage')
+def people_manage():
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("SELECT id, first, last, middle, suffix, email, phone, dob, description, address1, address2, city, state, zip, country FROM people_vw")
+  result = c.fetchall()
+  c.close()
+  response = {}
+  response["items"] = []
+  for r in result:
+    item = dict_builder(("id",) + people_vw_cols, r)
+    response["items"].append(item)
+
+  return template('tpl/people', items=response["items"])
+
+# Return a listing of people
+@route('/list_people/<format>')
+def listPeople(format):
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("SELECT id, first, last, middle, suffix, email, phone, dob, description, address1, address2, city, state, zip, country FROM people_vw")
+  result = c.fetchall()
+  c.close()
+  response = {}
+  response["items"] = []
+  for r in result:
+    item = dict_builder(("id",) + people_vw_cols, r)
+    response["items"].append(item)
+  
+  if format == 'table':
+    return template('tpl/item_table', items=response["items"])
+  
+  return response
+
+# Add People
+@route('/add_people', method='POST')
+def add_people():
+  data = request.json
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+
+  # add the person
+  sql = build_insert(people_cols, "people", request.json)
+  c.execute(sql[0], sql[1])
+
+  # create an account for the person
+  new_person_id = c.lastrowid
+  sql = build_insert(('person', 'comments'), 'accounts', json.loads('{"person": ' + str(1) + ', "comments": "Auto create"}'))
+  c.execute(sql[0], sql[1])
+  conn.commit()
+  
+  return {"success": True}
+
+# Get Person
+@route('/people/<id>', method='GET')
+def people(id):
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute(build_select(people_cols, 'people', "id = ?"), (id,))
+  result = c.fetchall()
+  c.close()
+  
+  return response_dict(result, people_cols)
+
+# Update Person
+@route('/people/<id>', method='POST')
+def edit_people(id):
+  data = request.json
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  sql = build_update(people_cols, "people", data, id)
+  c.execute(sql)
+  conn.commit()
+  
+  return {"success": True}
+
+# Remove Person
+@route('/r_people/<id>', method='GET')
+@auth_basic(check)
+def r_people(id):
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("DELETE FROM people WHERE id = ?", (id,))
+  conn.commit()
+  c.close()
+  
+  return {"success": True} 
+
+
+
+#########################
+###### Places ######
+#########################
+
+# Address Manager Page
+@route('/places/manage')
+def places_manage():
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("SELECT * FROM places")
+  result = c.fetchall()
+  c.close()
+  response = {}
+  response["items"] = []
+  for r in result:
+    item = dict_builder(("id",) + places_cols, r)
+    response["items"].append(item)
+
+  return template('tpl/places', items=response["items"])
+
+# Return a listing of addresses
+@route('/list_places/<format>')
+def listPlaces(format):
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("SELECT * FROM places")
+  result = c.fetchall()
+  c.close()
+  response = {}
+  response["items"] = []
+  for r in result:
+    item = dict_builder(("id",) + places_cols, r)
+    response["items"].append(item)
+  
+  if format == 'table':
+    return template('tpl/item_table', items=response["items"])
+  
+  return response
+
+# Add an address
+@route('/add_places', method='POST')
+def add_places():
+  data = request.json
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  sql = build_insert(places_cols, "places", request.json)
+  c.execute(sql[0], sql[1])
+  conn.commit()
+  
+  return {"success": True}
+
+# Get an address
+@route('/places/<id>', method='GET')
+def places(id):
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute(build_select(places_cols, 'places', "id = ?"), (id,))
+  result = c.fetchall()
+  c.close()
+  
+  return response_dict(result, places_cols)
+  
+# Update an address
+@route('/places/<id>', method='POST')
+def edit_places(id):
+  data = request.json
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  sql = build_update(places_cols, "places", data, id)
+  c.execute(sql)
+  conn.commit()
+  
+  return {"success": True}
+
+# Remove an address
+@route('/r_places/<id>', method='GET')
+@auth_basic(check)
+def r_places(id):
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("DELETE FROM places WHERE id = ?", (id,))
+  conn.commit()
+  c.close()
+  
+  return {"success": True}
+  
 
 ############################################
   
