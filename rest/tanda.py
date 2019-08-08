@@ -145,7 +145,7 @@ def accounts_manage():
   return template('tpl/accounts', items=response["items"])
 
 # Return a listing of accounts
-@route('/list_accounts/<format>')
+@route('/accounts/list/<format>')
 def listAccounts(format):
 
   conn = sqlite3.connect(db_name)
@@ -217,7 +217,7 @@ def circles_manage():
   return template('tpl/circles', items=response["items"])
 
 
-@route('/list_circles/<format>')
+@route('/circles/list/<format>')
 def listCircles(format):
 
   conn = sqlite3.connect(db_name)
@@ -236,7 +236,8 @@ def listCircles(format):
   
   return response
 
-@route('/add_circles', method='POST')
+# Add a new circle
+@route('/circles/add', method='POST')
 def add_circles():
   data = request.json
   conn = sqlite3.connect(db_name)
@@ -247,7 +248,7 @@ def add_circles():
   
   return {"success": True}
 
-
+# Get a circle
 @route('/circles/<id>', method='GET')
 def circles(id):
   conn = sqlite3.connect(db_name)
@@ -258,6 +259,7 @@ def circles(id):
   
   return response_dict(result, circles_cols)
   
+# Update circle
 @route('/circles/<id>', method='POST')
 def edit_circles(id):
   data = request.json
@@ -269,8 +271,8 @@ def edit_circles(id):
   
   return {"success": True}
 
-
-@route('/r_circles/<id>', method='GET')
+# Remove circle
+@route('/circles/r/<id>', method='GET')
 @auth_basic(check)
 def r_circles(id):
   conn = sqlite3.connect(db_name)
@@ -281,8 +283,9 @@ def r_circles(id):
   
   return {"success": True}
 
+# Add a percon to a circle
 
-@route('/circles/addperson/<id>/<personid>')
+@route('/circles_people/add/<id>/<personid>')
 def circles_add_people(id, personid):
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
@@ -313,7 +316,7 @@ def people_manage():
   return template('tpl/people', items=response["items"])
 
 # Return a listing of people
-@route('/list_people/<format>')
+@route('/people/list/<format>')
 def listPeople(format):
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
@@ -332,7 +335,7 @@ def listPeople(format):
   return response
 
 # Add People
-@route('/add_people', method='POST')
+@route('/people/add', method='POST')
 def add_people():
   data = request.json
   conn = sqlite3.connect(db_name)
@@ -374,7 +377,7 @@ def edit_people(id):
   return {"success": True}
 
 # Remove Person
-@route('/r_people/<id>', method='GET')
+@route('/people/r/<id>', method='GET')
 @auth_basic(check)
 def r_people(id):
   conn = sqlite3.connect(db_name)
@@ -408,7 +411,7 @@ def places_manage():
   return template('tpl/places', items=response["items"])
 
 # Return a listing of addresses
-@route('/list_places/<format>')
+@route('/places/list/<format>')
 def listPlaces(format):
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
@@ -427,7 +430,7 @@ def listPlaces(format):
   return response
 
 # Add an address
-@route('/add_places', method='POST')
+@route('/places/add', method='POST')
 def add_places():
   data = request.json
   conn = sqlite3.connect(db_name)
@@ -462,7 +465,7 @@ def edit_places(id):
   return {"success": True}
 
 # Remove an address
-@route('/r_places/<id>', method='GET')
+@route('/places/r/<id>', method='GET')
 @auth_basic(check)
 def r_places(id):
   conn = sqlite3.connect(db_name)

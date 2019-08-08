@@ -135,7 +135,7 @@ $(function () {
                 var category = $(node).closest(".managerPane").attr("id");
                 $.ajax({
                     type: "GET",
-                    url: "/r_" + category + "/" + id,
+                    url: "/" + category + "/r/" + id,
                     success: function (r) {
                         window.tanda.tables.displayItems(category);
                         window.tanda.tables.closeForms();
@@ -186,7 +186,7 @@ $(function () {
                             type: "POST",
                             contentType: "application/json",
                             dataType: "json",
-                            url: "/add_" + category,
+                            url: "/" + category + "/add",
                             data: JSON.stringify(items),
                             success: function (r) {
                                 window.tanda.tables.displayItems(category);
@@ -234,7 +234,7 @@ $(function () {
             displayItems: function (category) {
                 $.ajax({
                     type: "GET",
-                    url: "/list_" + category + "/table",
+                    url: "/" + category + "/list/table",
                     success: function (r) {
                         $("#" + category + "-table").html(r);
 

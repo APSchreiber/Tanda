@@ -29,19 +29,6 @@ There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. Th
 
 </div>
 
-
-<br/><br/>
-<select id="addPersonSelect">
-    <option></option>
-    % for p in model.people_list:
-    <option value="{{p[0]}}">{{p[1]}} {{p[2]}}</option>
-    % end
-</select>
-
-<button id="addCirclesPeople" type="button">Add</button>
-<br/><br/>
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
 <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200' rel='stylesheet' type='text/css'>
