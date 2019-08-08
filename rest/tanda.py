@@ -180,7 +180,7 @@ def circles_details(id):
   circle = result_circles[0]
   
   # get participants in circle
-  c.execute("SELECT circleid, first, last FROM participants_vw WHERE circleid = ?", (id,))
+  c.execute("SELECT circleid, first, last, payout_order, distribution, circle_balance FROM participants_vw WHERE circleid = ?", (id,))
   result_participants = c.fetchall()
 
   # get available people
@@ -192,7 +192,7 @@ def circles_details(id):
   bag_participants = {}
   bag_participants["items"] = []
   for r in result_participants:
-    item = dict_builder(("circleid", "first", "last"), r)
+    item = dict_builder(("circleid", "first", "last", "payout_order", "distribution", "circle_balance"), r)
     bag_participants["items"].append(item)
 
   vm = Circle_vm(circle[0], circle[1], circle[2], circle[3], circle[4], circle[5], circle[6], result_participants, result_people)
@@ -284,8 +284,7 @@ def r_circles(id):
   return {"success": True}
 
 # Add a percon to a circle
-
-@route('/circles_people/add/<id>/<personid>')
+@route('/circles_people/add/<id>/<personid>', method='POST')
 def circles_add_people(id, personid):
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
@@ -347,7 +346,7 @@ def add_people():
 
   # create an account for the person
   new_person_id = c.lastrowid
-  sql = build_insert(('person', 'comments'), 'accounts', json.loads('{"person": ' + str(1) + ', "comments": "Auto create"}'))
+  sql = build_insert(('person', 'comments'), 'accounts', json.loads('{"person": ' + str(new_person_id) + ', "comments": "Auto create"}'))
   c.execute(sql[0], sql[1])
   conn.commit()
   
@@ -475,6 +474,28 @@ def r_places(id):
   c.close()
   
   return {"success": True}
+
+
+#########################
+###### Other ######
+#########################
+
+@route('/domains/<t>/<f>')
+def domains(t, f):
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("SELECT id, " + f + " FROM " + t)
+  result = c.fetchall()
+  c.close()
+  
+  response = {}
+  response["items"] = []
+  for r in result:
+    item = {"id": r[0], "val": r[1]}
+    response["items"].append(item)
+  
+  return response
+
   
 
 ############################################

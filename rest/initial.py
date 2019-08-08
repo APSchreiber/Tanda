@@ -12,7 +12,7 @@ con.execute("INSERT INTO places (address1, city, state, zip, country) VALUES ('1
 
 # Circles
 con.execute("CREATE TABLE circles (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, start TEXT, months INTEGER, loan INTEGER, capacity INTEGER, description TEXT, comments TEXT)")
-con.execute("INSERT INTO circles (name, start, months, loan, capacity) VALUES ('The First Circle', 2019-09-19, 12, 1200, 12)")
+con.execute("INSERT INTO circles (name, start, months, loan, capacity) VALUES ('The First Circle', '2019-09-19', 12, 1200, 12)")
 
 con.execute("CREATE TABLE circles_people (circleid INTEGER NOT NULL, peopleid INTEGER NOT NULL, payout_order INTEGER, distribution TEXT, PRIMARY KEY(circleid, peopleid))")
 con.execute("INSERT INTO circles_people (circleid, peopleid, payout_order, distribution) VALUES (1, 1, 1, 'full')")
@@ -26,7 +26,7 @@ con.execute("CREATE TABLE payments (id INTEGER PRIMARY KEY AUTOINCREMENT, amount
 con.execute("INSERT INTO payments (amount, date, person, account, circle) VALUES (300, '2019-08-06', 1, 1, 1)")
 
 # Views
-con.execute("CREATE VIEW people_vw AS SELECT people.id, people.eto, people.first, people.last, people.middle, people.suffix, people.email, people.phone, people.description, people.dob, strftime('%m/%d/%Y', people.dob) as dob_format, people.address, places.address1, places.address2, places.city, places.state, places.zip, places.country, places.description as place_description FROM people INNER JOIN places on places.id = people.address")
+con.execute("CREATE VIEW people_vw AS SELECT people.id, people.eto, people.first, people.last, people.middle, people.suffix, people.email, people.phone, people.description, people.dob, strftime('%m/%d/%Y', people.dob) as dob_format, people.address, places.address1, places.address2, places.city, places.state, places.zip, places.country, places.description as place_description, accounts.id as accountid FROM people INNER JOIN places on places.id = people.address LEFT JOIN accounts ON people.id = accounts.person")
 
 # con.execute("CREATE VIEW participants_vw AS SELECT circles_people.circleid, circles_people.peopleid, people.first, people.last, people.middle, people.suffix, circles.name, circles.loan FROM circles_people JOIN people on people.id = circles_people.peopleid JOIN circles on circles.id = circles_people.circleid")
 
@@ -34,6 +34,6 @@ con.execute("CREATE VIEW circles_vw AS SELECT circles.id, circles.name, (date(ci
 
 con.execute("CREATE VIEW accounts_vw AS SELECT accounts.id, accounts.accountno, COUNT(payments.id) as payments, SUM(payments.amount) as balance FROM payments JOIN accounts on payments.account = accounts.id GROUP BY accounts.id")
 
-con.execute("CREATE VIEW participants_vw AS SELECT circles_people.circleid, circles_people.peopleid, people_vw.eto, people_vw.first, people_vw.last, people_vw.middle, people_vw.suffix,  people_vw.email, people_vw.phone, people_vw.dob, circles_vw.name, circles_vw.start, circles_vw.finish, circles_vw.capacity, circles_vw.enrolled, circles_people.payout_order, circles_people.distribution, SUM(payments.amount) as circle_balance FROM payments JOIN circles_vw ON payments.circle = circles_vw.id JOIN circles_people ON circles_vw.id = circles_people.circleid JOIN people_vw ON circles_people.peopleid = people_vw.id JOIN accounts ON people_vw.id = accounts.person")
+con.execute("CREATE VIEW participants_vw AS SELECT circles_people.circleid, circles_people.peopleid, people_vw.eto, people_vw.first, people_vw.last, people_vw.middle, people_vw.suffix, people_vw.email, people_vw.phone, people_vw.dob, circles_vw.name, circles_vw.start, circles_vw.finish, circles_vw.capacity, circles_vw.enrolled, circles_people.payout_order, circles_people.distribution, s1.circle_balance FROM payments JOIN circles_vw ON payments.circle = circles_vw.id JOIN circles_people ON circles_vw.id = circles_people.circleid JOIN people_vw ON circles_people.peopleid = people_vw.id JOIN accounts ON people_vw.id = accounts.person LEFT JOIN (SELECT payments.account as act, SUM(payments.amount) as circle_balance FROM payments GROUP BY payments.account, payments.circle) s1 ON people_vw.accountid = s1.act GROUP BY people_vw.id")
 
 con.commit()

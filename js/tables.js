@@ -182,11 +182,38 @@ $(function () {
 
                         var items = window.tanda.tables.getItems(category);
 
+                        // check for additional route params
+                        addParams = "";
+                        if ($("#editForm-" + category).data("add-route-params")) {
+                            var params = $("#editForm-" + category).data("add-route-params");
+                            routeParams = [];
+                            paramsList = params.split(",");
+                            for (var i = 0; i < paramsList.length; i++) {
+                                param = paramsList[i];
+                                // get param by dom id or other stuff
+                                var paramKey = param.split("~");
+                                if (paramKey.length > 1) {
+                                    // get by dom id
+                                    if (paramKey[0] === "dom") {
+                                        var getId = paramKey[1];
+                                        var getType = paramKey[2];
+                                        if (getType === "val") {
+                                            param = $("#" + getId).val();
+                                        }
+                                    }
+                                }
+                                routeParams.push(param);
+                            }
+                            for (var i = 0; i < routeParams.length; i++) {
+                                addParams += "/" + routeParams[i];
+                            }
+                        }
+
                         $.ajax({
                             type: "POST",
                             contentType: "application/json",
                             dataType: "json",
-                            url: "/" + category + "/add",
+                            url: "/" + category + "/add" + addParams,
                             data: JSON.stringify(items),
                             success: function (r) {
                                 window.tanda.tables.displayItems(category);
