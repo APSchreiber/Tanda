@@ -34,10 +34,6 @@
         <input class="people" type="text" id="people-suffix" />
         <div class="clear"></div>
 
-        <!-- <label for="event-venue">Venue</label>
-        <select class="event" name="event-venue" id="event-venue" data-domain="venues-name"></select>
-        <div class="clear"></div> -->
-
         <label for="people-phone">Phone</label>
         <input class="people" type="text" id="people-phone" />
         <div class="clear"></div>
@@ -50,11 +46,9 @@
         <input class="people" type="date" id="people-dob" />
         <div class="clear"></div>
 
-        <input class="people hidden" type="text" id="people-address" />
-        <div class="clear"></div>
-
         <label for="people-address">Address</label>
-        <input type="text" id="people-address-auto" />
+        <input class="people autocomplete-value" type="text" id="people-address" />
+        <input type="text" class="autocomplete-label" id="autocomplete-people-address" />
         <div class="clear"></div>
 
         <label for="people-description">Description</label>
@@ -76,29 +70,5 @@
     $(document).ready(function () {
         window.tanda.tables.init();
         window.tanda.tables.displayItems("people");
-
-        // Single Select
-        $("#people-address-auto").autocomplete({
-            source: function(request, response) {
-            // Fetch data
-            $.ajax({
-                url: "/autocomplete",
-                type: 'post',
-                dataType: "json",
-                data: {
-                search: request.term
-                },
-                success: function(data) {
-                    response(data);
-                }
-            });
-            },
-            select: function (event, ui) {
-                // Set selection
-                $('#people-address-auto').val(ui.item.label); // display the selected text
-                $('#people-address').val(ui.item.value); // save selected id to input
-                return false;
-            }
-        });
     });
 </script>

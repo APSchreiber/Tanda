@@ -282,6 +282,11 @@ html {
   width: 60%;
 }
 
+
+.autocomplete-value {
+  display: none;
+}
+
 .ui-menu-item-wrapper {
   font-size: 0.8em;
   text-align: left;

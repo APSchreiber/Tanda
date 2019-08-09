@@ -29,6 +29,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/static/js/DataTables/datatables.min.js"></script>
     <script src="/static/config.json.js"></script>
+    <script src="/static/js/autocomplete.js"></script>
     <script src="/static/js/tables.js"></script>
 
 </head>
