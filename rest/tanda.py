@@ -7,7 +7,6 @@ import sqlite3, json, nltk
 from bottle import *
 from bottle import template
 
-
 ############################################
 
 bottle.debug(True)
@@ -534,6 +533,21 @@ def r_places(id):
 #########################
 ###### Other ######
 #########################
+
+@route('/autocomplete', method='POST')
+def autocomplete():
+    search = request.forms.get('search')
+    conn = sqlite3.connect(db_name)
+    c = conn.cursor()
+    c.execute("SELECT CAST(id AS TEXT) as id, address1 FROM places WHERE address1 LIKE ?", (str(search) + "%",))
+    result = c.fetchall()
+    c.close()
+    response = {}
+    response["items"] = []
+    for r in result:
+      item = dict_builder(("value", "label"), r)
+      response["items"].append(item)
+    return json.dumps(response['items'])
 
 @route('/domains/<t>/<f>')
 def domains(t, f):

@@ -21,10 +21,12 @@
     <link href='http://fonts.googleapis.com/css?family=Fredericka+the+Great' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Farsan|Kalam" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="/static/js/DataTables/datatables.min.css" />
     <link href="/static/css/style.css" rel="stylesheet" type="text/css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/static/js/DataTables/datatables.min.js"></script>
     <script src="/static/config.json.js"></script>
     <script src="/static/js/tables.js"></script>

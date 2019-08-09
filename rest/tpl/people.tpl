@@ -50,8 +50,11 @@
         <input class="people" type="date" id="people-dob" />
         <div class="clear"></div>
 
+        <input class="people hidden" type="text" id="people-address" />
+        <div class="clear"></div>
+
         <label for="people-address">Address</label>
-        <input class="people" type="text" id="people-address" />
+        <input type="text" id="people-address-auto" />
         <div class="clear"></div>
 
         <label for="people-description">Description</label>
@@ -73,5 +76,29 @@
     $(document).ready(function () {
         window.tanda.tables.init();
         window.tanda.tables.displayItems("people");
-    })
+
+        // Single Select
+        $("#people-address-auto").autocomplete({
+            source: function(request, response) {
+            // Fetch data
+            $.ajax({
+                url: "/autocomplete",
+                type: 'post',
+                dataType: "json",
+                data: {
+                search: request.term
+                },
+                success: function(data) {
+                    response(data);
+                }
+            });
+            },
+            select: function (event, ui) {
+                // Set selection
+                $('#people-address-auto').val(ui.item.label); // display the selected text
+                $('#people-address').val(ui.item.value); // save selected id to input
+                return false;
+            }
+        });
+    });
 </script>

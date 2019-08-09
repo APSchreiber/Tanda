@@ -201,6 +201,7 @@ html {
   
   .inputForm select {
       float: left;
+      margin-left: 6px; 
   }
 
 
@@ -279,4 +280,9 @@ html {
 #aboutContent {
   float: left;
   width: 60%;
+}
+
+.ui-menu-item-wrapper {
+  font-size: 0.8em;
+  text-align: left;
 }
