@@ -10,7 +10,7 @@ There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. Th
 <div id="circles_people" class="managerPane">
 
     <h2>People</h2>
-    <div id="circles_people-table">
+    <div class="tables" id="circles_people-table">
         % include('tpl/item_table.tpl', items=items)
     </div>
 
@@ -155,14 +155,4 @@ There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. Th
 
     render();
     setInterval(render, 2000);
-</script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript" src="/static/js/DataTables/datatables.min.js"></script>
-<script src="/static/config.json.js"></script>
-<script>
-    $(document).ready(function(){
-        window.tanda.tables.init();
-        window.tanda.tables.displayItems("circles");
-    })
 </script>

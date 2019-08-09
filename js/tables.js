@@ -310,7 +310,13 @@ $(function () {
                 if (window.tanda.tables.config.geo.defaultCountry) {
                     $("#venue-country").val(window.tanda.tables.config.geo.defaultCountry)
                 }
+
+                $(".tables").each(function() {
+                    var tableId = $(this).attr("id");
+                    var tableName = tableId.split("-").shift();
+                    window.tanda.tables.displayItems(tableName);
+                });
             }
         }
-
+        window.tanda.tables.init();
 });

@@ -4,7 +4,7 @@
 
     <div class="clear"></div>
 
-    <div id="places-table">
+    <div class="tables" id="places-table">
         % include('tpl/item_table.tpl', items=items)
     </div>
 
@@ -52,10 +52,3 @@
     </div>
     <div class="clear"></div>
 </div>
-
-<script>
-    $(document).ready(function () {
-        window.tanda.tables.init();
-        window.tanda.tables.displayItems("places");
-    })
-</script>

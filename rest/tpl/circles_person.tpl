@@ -5,7 +5,7 @@
 <div id="payments" class="managerPane">
 
     <h2>Payments</h2>
-    <div id="payments-table">
+    <div class="tables" id="payments-table">
         % include('tpl/item_table.tpl', items=items)
     </div>
 
@@ -39,13 +39,3 @@
     <div class="clear"></div>
 
 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript" src="/static/js/DataTables/datatables.min.js"></script>
-<script src="/static/config.json.js"></script>
-<script>
-    $(document).ready(function(){
-        window.tanda.tables.init();
-        window.tanda.tables.displayItems("circles");
-    })
-</script>

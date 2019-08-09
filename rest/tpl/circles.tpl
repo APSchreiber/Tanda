@@ -4,7 +4,7 @@
 
     <div class="clear"></div>
 
-    <div id="circles-table">
+    <div class="tables" id="circles-table">
         % include('tpl/item_table.tpl', items=items)
     </div>
 
@@ -48,10 +48,3 @@
     </div>
     <div class="clear"></div>
 </div>
-
-<script>
-    $(document).ready(function(){
-        window.tanda.tables.init();
-        window.tanda.tables.displayItems("circles");
-    })
-</script>

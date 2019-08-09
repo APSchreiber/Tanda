@@ -4,7 +4,7 @@
 
     <div class="clear"></div>
 
-    <div id="accounts-table">
+    <div class="tables" id="accounts-table">
         % include('tpl/item_table.tpl', items=items)
     </div>
 
