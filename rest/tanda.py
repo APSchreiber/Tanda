@@ -385,8 +385,44 @@ def r_people(id):
   conn.commit()
   c.close()
   
-  return {"success": True} 
+  return {"success": True}
 
+# Details page for person in a circle
+@route('/circles_people/details/<id>')
+def circles_people_details(id):
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  
+  c.execute("SELECT id, date, amount, person, account FROM payments WHERE person = ?", (id,))
+  result = c.fetchall()
+  
+  c.close()
+  response = {}
+  response["items"] = []
+  for r in result:
+    item = dict_builder(("id", "date", "amount", "person", "account"), r)
+    response["items"].append(item)
+
+  return template('tpl/circles_person', items=response["items"])
+
+
+#########################
+###### Payments ######
+#########################
+
+# Add payment
+@route('/payments/add', method='POST')
+def add_payment():
+  data = request.json
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+
+  # add the payment
+  sql = build_insert(("date", "amount", "person", "account"), "payments", request.json)
+  c.execute(sql[0], sql[1])
+  conn.commit()
+  
+  return {"success": True}
 
 
 #########################

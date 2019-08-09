@@ -158,7 +158,11 @@ There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. Th
 </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/DataTables/datatables.min.js"></script>
-    <script src="/static/config.json.js"></script>
-    <script src="/static/js/tables.js"></script>
-<script src="/static/js/circle.js"></script>
+<script type="text/javascript" src="/static/js/DataTables/datatables.min.js"></script>
+<script src="/static/config.json.js"></script>
+<script>
+    $(document).ready(function(){
+        window.tanda.tables.init();
+        window.tanda.tables.displayItems("circles");
+    })
+</script>
