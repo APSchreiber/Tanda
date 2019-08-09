@@ -1,13 +1,18 @@
 $(function () {
     window.tanda = window.tanda || {};
-    window.tanda.autocomplte = window.tanda.autocomplete ||
+    window.tanda.autocomplete = window.tanda.autocomplete ||
         {
-            wire: function (elem, url, ) {
-                $("#people-address-auto").autocomplete({
+            config: {
+                autocompleteUrl: "/autocomplete"
+            },
+            wire: function (labelId, url) {
+                var idSplit = labelId.split("-");
+                idSplit.shift();
+                var valueId = idSplit.join("-");
+                $("#" + labelId).autocomplete({
                     source: function (request, response) {
-                        // Fetch data
                         $.ajax({
-                            url: "/autocomplete",
+                            url: window.tanda.autocomplete.config.autocompleteUrl,
                             type: 'post',
                             dataType: "json",
                             data: {
@@ -19,18 +24,18 @@ $(function () {
                         });
                     },
                     select: function (event, ui) {
-                        // Set selection
-                        $('#people-address-auto').val(ui.item.label); // display the selected text
-                        $('#people-address').val(ui.item.value); // save selected id to input
+                        $("#" + labelId).val(ui.item.label);
+                        $("#" + valueId).val(ui.item.value);
                         return false;
                     }
                 });
             },
             init: function () {
                 $(".autocomplete-label").each(function () {
-                    var autocompleteLabelId = $(this).id();
-                    //window.tanda.autocomplete.wire();
+                    var labelId = $(this).attr("id");
+                    window.tanda.autocomplete.wire(labelId);
                 });
+                console.log("autocomplete loaded.");
             }
         }
     window.tanda.autocomplete.init();
