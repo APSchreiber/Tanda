@@ -424,6 +424,25 @@ def add_payment():
   
   return {"success": True}
 
+# Return a listing of payments
+@route('/payments/list/<format>')
+def listPayments(format):
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("SELECT id, date, amount, person, account FROM payments")
+  result = c.fetchall()
+  c.close()
+  response = {}
+  response["items"] = []
+  for r in result:
+    item = dict_builder(("id", "date", "amount", "person", "account"), r)
+    response["items"].append(item)
+  
+  if format == 'table':
+    return template('tpl/item_table', items=response["items"])
+  
+  return response
+
 
 #########################
 ###### Places ######
