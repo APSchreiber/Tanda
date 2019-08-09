@@ -47,7 +47,7 @@
         <div class="clear"></div>
 
         <label for="people-dob">Date of Birth</label>
-        <input class="people" type="text" id="people-dob" />
+        <input class="people" type="date" id="people-dob" />
         <div class="clear"></div>
 
         <label for="people-address">Address</label>

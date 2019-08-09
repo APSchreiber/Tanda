@@ -17,7 +17,7 @@
         <div class="clear"></div>
 
         <label for="payments-date">Date</label>
-        <input class="payments" type="text" id="payments-date" />
+        <input class="payments" type="date" id="payments-date" />
         <div class="clear"></div>
 
         <label for="payments-amount">Amount</label>

@@ -290,7 +290,6 @@ $(function () {
                 });
 
                 $(".inputForm .closeX").click(function () {
-                    alert();
                     window.tanda.tables.closeForms();
                 });
 

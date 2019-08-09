@@ -19,15 +19,11 @@
         <div class="clear"></div>
 
         <label for="circles-start">Start</label>
-        <input class="circles" type="text" id="circles-start" />
+        <input class="circles" type="date" id="circles-start" />
         <div class="clear"></div>
 
         <label for="circles-months">Months</label>
         <input class="circles" type="text" id="circles-months" />
-        <div class="clear"></div>
-
-        <label for="circles-due">Due</label>
-        <input class="circles" type="text" id="circles-due" />
         <div class="clear"></div>
 
         <label for="circles-loan">Loan</label>
