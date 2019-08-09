@@ -404,6 +404,24 @@ def circles_people_details(id):
 
   return template('tpl/circles_person', items=response["items"])
 
+# Return a listing of people in a circle
+@route('/circles_people/list/<format>')
+def listCirclesPeople(format):
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("SELECT circleid, first, last, payout_order, distribution, circle_balance FROM participants_vw")
+  result = c.fetchall()
+  c.close()
+  response = {}
+  response["items"] = []
+  for r in result:
+    item = dict_builder(("id", "first", "last", "payout_order", "distribution", "circle_balance"), r)
+    response["items"].append(item)
+  
+  if format == 'table':
+    return template('tpl/item_table', items=response["items"])
+  
+  return response
 
 #########################
 ###### Payments ######

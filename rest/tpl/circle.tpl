@@ -156,3 +156,5 @@ There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. Th
     render();
     setInterval(render, 2000);
 </script>
+
+<script type="text/javascript" src="/static/js/DataTables/datatables.min.js"></script>

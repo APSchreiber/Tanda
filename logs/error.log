@@ -1,8 +1,0 @@
-[Sat Aug 03 21:47:23.185767 2019] [:error] [pid 11831:tid 140167603648256] [remote 24.107.151.149:18520] Traceback (most recent call last):
-[Sat Aug 03 21:47:23.185842 2019] [:error] [pid 11831:tid 140167603648256] [remote 24.107.151.149:18520]   File "/usr/local/lib/python2.7/dist-packages/bottle.py", line 862, in _handle
-[Sat Aug 03 21:47:23.185849 2019] [:error] [pid 11831:tid 140167603648256] [remote 24.107.151.149:18520]     return route.call(**args)
-[Sat Aug 03 21:47:23.185855 2019] [:error] [pid 11831:tid 140167603648256] [remote 24.107.151.149:18520]   File "/usr/local/lib/python2.7/dist-packages/bottle.py", line 1740, in wrapper
-[Sat Aug 03 21:47:23.185861 2019] [:error] [pid 11831:tid 140167603648256] [remote 24.107.151.149:18520]     rv = callback(*a, **ka)
-[Sat Aug 03 21:47:23.185868 2019] [:error] [pid 11831:tid 140167603648256] [remote 24.107.151.149:18520]   File "/var/www/tanda/rest/tanda.py", line 149, in edit_people
-[Sat Aug 03 21:47:23.185872 2019] [:error] [pid 11831:tid 140167603648256] [remote 24.107.151.149:18520]     c.execute(sql)
-[Sat Aug 03 21:47:23.185875 2019] [:error] [pid 11831:tid 140167603648256] [remote 24.107.151.149:18520] OperationalError: attempt to write a readonly database

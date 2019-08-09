@@ -264,7 +264,7 @@ $(function () {
                     url: "/" + category + "/list/table",
                     success: function (r) {
                         $("#" + category + "-table").html(r);
-
+                        console.log(r);
                         $('.data-table').DataTable({
                             select: true,
                             buttons: window.tanda.tables.dtConfig.buttons,
