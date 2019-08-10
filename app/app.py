@@ -38,6 +38,13 @@ class Circle_vm:
     self.participants = participants
     self.people_list = people_list
 
+class Participant_vm:
+  def __init__(self, person_id, person_name, account, circle_name):
+    self.person_id = person_id
+    self.person_name = person_name
+    self.account = account,
+    self.circle_name = circle_name
+
 ############################################
 
 def check(username, password):
@@ -208,7 +215,7 @@ def circles_details(id):
   circle = result_circles[0]
   
   # get participants in circle
-  c.execute("SELECT circleid, first, last, payout_order, distribution, circle_balance FROM participants_vw WHERE circleid = ?", (id,))
+  c.execute("SELECT peopleid, first, last, payout_order, distribution, circle_balance FROM participants_vw WHERE circleid = ?", (id,))
   result_participants = c.fetchall()
 
   # get available people
@@ -220,7 +227,7 @@ def circles_details(id):
   bag_participants = {}
   bag_participants["items"] = []
   for r in result_participants:
-    item = dict_builder(("circleid", "first", "last", "payout_order", "distribution", "circle_balance"), r)
+    item = dict_builder(("id", "first", "last", "payout_order", "distribution", "circle_balance"), r)
     bag_participants["items"].append(item)
 
   vm = Circle_vm(circle[0], circle[1], circle[2], circle[3], circle[4], circle[5], circle[6], result_participants, result_people)
@@ -415,30 +422,37 @@ def r_people(id):
   
   return {"success": True}
 
-# Details page for person in a circle
+# Details page for participant in a circle
 @route('/circles_people/details/<id>')
 def circles_people_details(id):
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
   
+  # get person
+  c.execute("SELECT circleid, name, peopleid, first, last, middle, suffix, email, phone, accountid, accountno FROM participants_vw WHERE peopleid = ?", (id,))
+  person = c.fetchall()[0]
+
+  # get payments for person
   c.execute("SELECT id, date, amount, person, account FROM payments WHERE person = ?", (id,))
-  result = c.fetchall()
+  payments_result = c.fetchall()
   
   c.close()
   response = {}
   response["items"] = []
-  for r in result:
+  for r in payments_result:
     item = dict_builder(("id", "date", "amount", "person", "account"), r)
     response["items"].append(item)
 
-  return template('views/circles_person', items=response["items"])
+  vm = Participant_vm(person_id=person[2], person_name=person[3] + " " + person[4], account=person[9], circle_name=person[1])
+
+  return template('views/circles_person', model=vm, items=response["items"])
 
 # Return a listing of people in a circle
 @route('/circles_people/list/<format>')
 def listCirclesPeople(format):
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
-  c.execute("SELECT circleid, first, last, payout_order, distribution, circle_balance FROM participants_vw")
+  c.execute("SELECT peopleid, first, last, payout_order, distribution, circle_balance FROM participants_vw")
   result = c.fetchall()
   c.close()
   response = {}
@@ -596,7 +610,7 @@ def autocomplete():
       response["items"].append(item)
     return json.dumps(response['items'])
 
-@route('/autocomplete/address', method='POST')
+@route('/autocomplete/places', method='POST')
 def autocomplete():
     search = request.forms.get('search')
     conn = sqlite3.connect(db_name)
