@@ -6,6 +6,7 @@ os.chdir(os.path.dirname(__file__))
 import sqlite3, json, nltk
 from bottle import *
 from bottle import template
+from datetime import datetime
 
 ############################################
 
@@ -323,7 +324,17 @@ def r_circles(id):
 def circles_add_people(id, personid):
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
+  
+  # add person to circle
   c.execute("INSERT INTO circles_people (circleid, peopleid) VALUES (?, ?)", (id, personid))
+
+  # add a default payment to the circle for the person
+  c.execute("SELECT id FROM accounts WHERE person = ?", (personid,))
+  account_id = c.fetchone()[0]
+  current_date = datetime.now().strftime("%m-%d-%Y")
+  sql = "INSERT INTO payments ('person', 'account', 'circle', 'amount', 'date', 'comments') VALUES (?, ?, ?, 0, ?, 'Initial payment on circle add')"
+  c.execute(sql, (personid, account_id, id, current_date))
+
   conn.commit()
   conn.close()
   return {"success": True}
@@ -384,6 +395,14 @@ def add_people():
   sql = build_insert(('person', 'comments'), 'accounts', json.loads('{"person": ' + str(new_person_id) + ', "comments": "Auto create"}'))
   c.execute(sql[0], sql[1])
   conn.commit()
+
+  # add a defult payment to the account
+  new_account_id = c.lastrowid
+  current_date = datetime.now().strftime("%m-%d-%Y")
+  sql = "INSERT INTO payments ('person', 'account', 'amount', 'date', 'comments') VALUES (?, ?, 0, ?, 'Payment on auto create')"
+  c.execute(sql, (new_person_id, new_account_id, current_date))
+
+  c.close()
   
   return {"success": True}
 

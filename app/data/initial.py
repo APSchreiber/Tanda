@@ -22,7 +22,7 @@ con.execute("CREATE TABLE accounts (id INTEGER PRIMARY KEY AUTOINCREMENT, accoun
 con.execute("INSERT INTO accounts (accountno, person) VALUES ('12345', 1)")
 
 # Payments
-con.execute("CREATE TABLE payments (id INTEGER PRIMARY KEY AUTOINCREMENT, amount INTEGER NOT NULL, date TEXT, person INTEGER, account INTEGER, circle INTEGER, FOREIGN KEY(account) REFERENCES accounts(id))")
+con.execute("CREATE TABLE payments (id INTEGER PRIMARY KEY AUTOINCREMENT, amount INTEGER NOT NULL, date TEXT, person INTEGER, account INTEGER, circle INTEGER, comments TEXT, FOREIGN KEY(account) REFERENCES accounts(id))")
 con.execute("INSERT INTO payments (amount, date, person, account, circle) VALUES (300, '2019-08-06', 1, 1, 1)")
 
 # Views
