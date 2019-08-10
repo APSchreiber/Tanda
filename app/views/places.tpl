@@ -5,7 +5,7 @@
     <div class="clear"></div>
 
     <div class="tables" id="places-table">
-        % include('views/item_table.tpl', items=items)
+        % include('views/_item_table.tpl', items=items)
     </div>
 
     <div class="inputForm hidden" id="editForm-places">

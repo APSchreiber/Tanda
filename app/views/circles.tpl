@@ -1,11 +1,11 @@
-% rebase('views/base.tpl', title='Tanda - Circles')
+% rebase('views/_base.tpl', title='Tanda - Circles')
 <div id="circles" class="managerPane">
     <h1>Circles</h1>
 
     <div class="clear"></div>
 
     <div class="tables" id="circles-table">
-        % include('views/item_table.tpl', items=items)
+        % include('views/_item_table.tpl', items=items)
     </div>
 
     <div class="inputForm hidden" id="editForm-circles">

@@ -48,7 +48,7 @@
 
         <label for="people-address">Address</label>
         <input class="people autocomplete-value" type="text" id="people-address" />
-        <input type="text" class="autocomplete-label" id="autocomplete-people-address" />
+        <input type="text" class="autocomplete-label" data-autocomplete-for="places" id="autocomplete-people-address" />
         <div class="clear"></div>
 
         <label for="people-description">Description</label>

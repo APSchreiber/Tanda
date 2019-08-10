@@ -110,10 +110,9 @@ def response_dict(result, cols):
 def custom500(error):
   return "Error: " + str(error)
 
-# @route('/test')
-# def t():
-#   x = data_tools.test
-#   return str(x)
+@route('/errors')
+def errors():
+  return static_file('error.log', root='../logs')
 
 @route('/')
 def root_static():
@@ -582,7 +581,22 @@ def r_places(id):
 ###### Other ######
 #########################
 
-@route('/autocomplete', method='POST')
+@route('/autocomplete/people', method='POST')
+def autocomplete():
+    search = request.forms.get('search')
+    conn = sqlite3.connect(db_name)
+    c = conn.cursor()
+    c.execute("SELECT CAST(id AS TEXT) as id, first FROM people WHERE first LIKE ?", (str(search) + "%",))
+    result = c.fetchall()
+    c.close()
+    response = {}
+    response["items"] = []
+    for r in result:
+      item = dict_builder(("value", "label"), r)
+      response["items"].append(item)
+    return json.dumps(response['items'])
+
+@route('/autocomplete/address', method='POST')
 def autocomplete():
     search = request.forms.get('search')
     conn = sqlite3.connect(db_name)

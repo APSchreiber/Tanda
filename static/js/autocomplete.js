@@ -5,14 +5,14 @@ $(function () {
             config: {
                 autocompleteUrl: "/autocomplete"
             },
-            wire: function (labelId, url) {
+            wire: function (labelId, autocompleteFor) {
                 var idSplit = labelId.split("-");
                 idSplit.shift();
                 var valueId = idSplit.join("-");
                 $("#" + labelId).autocomplete({
                     source: function (request, response) {
                         $.ajax({
-                            url: window.tanda.autocomplete.config.autocompleteUrl,
+                            url: window.tanda.autocomplete.config.autocompleteUrl + "/" + autocompleteFor,
                             type: 'post',
                             dataType: "json",
                             data: {
@@ -33,7 +33,8 @@ $(function () {
             init: function () {
                 $(".autocomplete-label").each(function () {
                     var labelId = $(this).attr("id");
-                    window.tanda.autocomplete.wire(labelId);
+                    var autocompleteFor = $(this).data("autocomplete-for");
+                    window.tanda.autocomplete.wire(labelId, autocompleteFor);
                 });
                 console.log("autocomplete loaded.");
             }

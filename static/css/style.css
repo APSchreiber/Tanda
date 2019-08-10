@@ -204,6 +204,11 @@ html {
       margin-left: 6px; 
   }
 
+  .submitButton {
+    margin: 6px;
+    margin-top: 14px;
+  }
+
 
 /********** tables **********/
 

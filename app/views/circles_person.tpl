@@ -10,26 +10,46 @@
     </div>
 
 
-    <div class="inputForm hidden" id="editForm-payments"">
+    <div class="inputForm hidden" id="editForm-payments">
 
         <h2>Payments</h2>
         <div class="closeX">x</div>
         <div class="clear"></div>
+        
+        <label for="searchPayerBy">Pay By</label>
+        <div class="clear"></div>
+        <select id="searchPayerBy">
+            <option selected value="person">Person</option>
+            <option value="account">Account</option>
+        </select>
+        <div class="clear"></div>
+
+        <span id="payByPerson">
+            <label class="hidden" for="payments-person">Person</label>
+            <input class="payments autocomplete-value" type="text" id="payments-person" />
+            <input type="text" class="autocomplete-label" data-autocomplete-for="people" id="autocomplete-payments-person" />
+            <div class="clear"></div>
+        </span>
+
+        <span class="hidden" id="payByAccount">
+            <label class="hidden" for="payments-account">Account</label>
+            <input type="text" id="payments-account" />
+            <div class="clear"></div>
+        </span>
 
         <label for="payments-date">Date</label>
         <input class="payments" type="date" id="payments-date" />
         <div class="clear"></div>
 
-        <label for="payments-amount">Amount</label>
-        <input class="payments" type="text" id="payments-amount" />
+        <label for="searchPayerBy">Payment ($)</label>
         <div class="clear"></div>
-
-        <label for="payments-person">Person</label>
-        <input class="payments" type="text" id="payments-person" />
+        <select id="searchPayerBy">
+            <option selected value="payment">Participant Payment</option>
+            <option value="credit">Payout</option>
+        </select>
         <div class="clear"></div>
-
-        <label for="payments-account">Account</label>
-        <input class="payments" type="text" id="payments-account" />
+        <label class="hidden" for="payments-amount">Amount ($)</label>
+        <input class="payments" type="number" step="100" id="payments-amount" />
         <div class="clear"></div>
 
         <button type="button" class="submitButton" id="submit-payments">Save</button>
