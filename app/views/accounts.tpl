@@ -1,11 +1,11 @@
-% rebase('tpl/base.tpl', title='Tanda - Accounts')
+% rebase('views/base.tpl', title='Tanda - Accounts')
 <div id="accounts" class="managerPane">
     <h1>Accounts</h1>
 
     <div class="clear"></div>
 
     <div class="tables" id="accounts-table">
-        % include('tpl/item_table.tpl', items=items)
+        % include('views/item_table.tpl', items=items)
     </div>
 
     <div class="inputForm hidden" id="editForm-accounts">
@@ -24,10 +24,3 @@
     </div>
     <div class="clear"></div>
 </div>
-
-<script>
-    $(document).ready(function () {
-        window.tanda.tables.init();
-        window.tanda.tables.displayItems("accounts");
-    })
-</script>

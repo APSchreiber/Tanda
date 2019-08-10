@@ -14,7 +14,7 @@ bottle.debug(True)
 
 ############################################
 
-db_name = 'tanda.db'
+db_name = 'data/tanda.db'
 
 people_cols = ('eto', 'first', 'last', 'middle', 'suffix', 'email', 'phone', 'dob', 'address', 'description')
 people_vw_cols = ('first', 'last', 'middle', 'suffix', 'email', 'phone', 'dob', 'description', 'address1', 'address2', 'city', 'state', 'zip', 'country')
@@ -114,14 +114,43 @@ def custom500(error):
 def root_static():
   return static_file('index.html', root='../')
     
-@route('/static/<filepath:path>')
+@route('/s/<filepath:path>')
 def serve_static(filepath):
   return static_file(filepath, root='../')
 
-@route('/baker')
-def root_static():
-  return static_file('baker.html', root='../baker/')
+# Static Routes
+@get("/static/html/<filepath:re:.*\.html>")
+def css(filepath):
+    return static_file(filepath, root="../static/css")
 
+@get("/static/css/<filepath:re:.*\.css>")
+def css(filepath):
+    return static_file(filepath, root="../static/css")
+
+@get("/static/img/<filepath:re:.*\.(jpg|png|gif|ico|svg)>")
+def img(filepath):
+    return static_file(filepath, root="../static/img")
+
+@get('/static/js/<filepath:path>')
+def js(filepath):
+  return static_file(filepath, root='../static/js')
+
+@route('/baker')
+def manager():
+  return static_file('baker.html', root='../static/')
+
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("SELECT * FROM circles")
+  result = c.fetchall()
+  c.close()
+  response = {}
+  response["items"] = []
+  for r in result:
+    item = dict_builder(("id",) + circles_cols, r)
+    response["items"].append(item)
+
+  return template('views/circles', items=response["items"])
 
 #########################
 ###### Accounts ######
@@ -141,7 +170,7 @@ def accounts_manage():
     item = dict_builder(("id", "person", "comments"), r)
     response["items"].append(item)
 
-  return template('tpl/accounts', items=response["items"])
+  return template('views/accounts', items=response["items"])
 
 # Return a listing of accounts
 @route('/accounts/list/<format>')
@@ -159,11 +188,11 @@ def listAccounts(format):
     response["items"].append(item)
   
   if format == 'table':
-    return template('tpl/item_table', items=response["items"])
+    return template('views/item_table', items=response["items"])
   
   return response
 
-
+  
 #########################
 ###### Circles ######
 #########################
@@ -196,7 +225,7 @@ def circles_details(id):
 
   vm = Circle_vm(circle[0], circle[1], circle[2], circle[3], circle[4], circle[5], circle[6], result_participants, result_people)
 
-  return template('tpl/circle', model=vm, items=bag_participants["items"])
+  return template('views/circle', model=vm, items=bag_participants["items"])
 
 
 @route('/circles/manage')
@@ -213,7 +242,7 @@ def circles_manage():
     item = dict_builder(("id",) + circles_cols, r)
     response["items"].append(item)
 
-  return template('tpl/circles', items=response["items"])
+  return template('views/circles', items=response["items"])
 
 
 @route('/circles/list/<format>')
@@ -231,7 +260,7 @@ def listCircles(format):
     response["items"].append(item)
   
   if format == 'table':
-    return template('tpl/item_table', items=response["items"])
+    return template('views/item_table', items=response["items"])
   
   return response
 
@@ -311,7 +340,7 @@ def people_manage():
     item = dict_builder(("id",) + people_vw_cols, r)
     response["items"].append(item)
 
-  return template('tpl/people', items=response["items"])
+  return template('views/people', items=response["items"])
 
 # Return a listing of people
 @route('/people/list/<format>')
@@ -328,7 +357,7 @@ def listPeople(format):
     response["items"].append(item)
   
   if format == 'table':
-    return template('tpl/item_table', items=response["items"])
+    return template('views/item_table', items=response["items"])
   
   return response
 
@@ -402,7 +431,7 @@ def circles_people_details(id):
     item = dict_builder(("id", "date", "amount", "person", "account"), r)
     response["items"].append(item)
 
-  return template('tpl/circles_person', items=response["items"])
+  return template('views/circles_person', items=response["items"])
 
 # Return a listing of people in a circle
 @route('/circles_people/list/<format>')
@@ -419,7 +448,7 @@ def listCirclesPeople(format):
     response["items"].append(item)
   
   if format == 'table':
-    return template('tpl/item_table', items=response["items"])
+    return template('views/item_table', items=response["items"])
   
   return response
 
@@ -456,7 +485,7 @@ def listPayments(format):
     response["items"].append(item)
   
   if format == 'table':
-    return template('tpl/item_table', items=response["items"])
+    return template('views/item_table', items=response["items"])
   
   return response
 
@@ -479,7 +508,7 @@ def places_manage():
     item = dict_builder(("id",) + places_cols, r)
     response["items"].append(item)
 
-  return template('tpl/places', items=response["items"])
+  return template('views/places', items=response["items"])
 
 # Return a listing of addresses
 @route('/places/list/<format>')
@@ -496,7 +525,7 @@ def listPlaces(format):
     response["items"].append(item)
   
   if format == 'table':
-    return template('tpl/item_table', items=response["items"])
+    return template('views/item_table', items=response["items"])
   
   return response
 

@@ -1,4 +1,4 @@
-% rebase('tpl/base.tpl', title='Circle')
+% rebase('views/base.tpl', title='Circle')
 <span id="circleId" data-id="{{model.id}}" data-enrolled="{{model.enrolled}}" data-percent="{{round((model.enrolled * 100.0) / model.capacity)}}"></span>
 <h1>{{model.name}}</h1>
 
@@ -11,7 +11,7 @@ There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. Th
 
     <h2>People</h2>
     <div class="tables" id="circles_people-table">
-        % include('tpl/item_table.tpl', items=items)
+        % include('views/item_table.tpl', items=items)
     </div>
 
 

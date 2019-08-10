@@ -1,11 +1,11 @@
-% rebase('tpl/base.tpl', title='Tanda - Places')
+% rebase('views/base.tpl', title='Tanda - Places')
 <div id="places" class="managerPane">
     <h1>Places</h1>
 
     <div class="clear"></div>
 
     <div class="tables" id="places-table">
-        % include('tpl/item_table.tpl', items=items)
+        % include('views/item_table.tpl', items=items)
     </div>
 
     <div class="inputForm hidden" id="editForm-places">

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
 <head>
-
     <meta name="description" content="Tanda - The Lending Circle" />
     <meta charset="utf-8" />
 
@@ -28,15 +26,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/static/js/DataTables/datatables.min.js"></script>
-    <script src="/static/config.json.js"></script>
+    <script src="/static/js/config.json.js"></script>
     <script src="/static/js/autocomplete.js"></script>
     <script src="/static/js/tables.js"></script>
-
 </head>
-
 <body>
     <div id="container" class="manager">
-
         <div class="overlay hidden"></div>
 
         <div class="topnav">
@@ -47,10 +42,7 @@
             <a href="/accounts/manage">accounts</a>
             <a href="/settings">settings</a>
         </div>
-
         {{!base}}
-
     </div>
 </body>
-
 </html>
