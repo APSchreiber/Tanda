@@ -320,20 +320,20 @@ def r_circles(id):
   return {"success": True}
 
 # Add a percon to a circle
-@route('/circles_people/add/<id>/<personid>', method='POST')
-def circles_add_people(id, personid):
+@route('/circles_people/add/<circleid>/<personid>', method='POST')
+def circles_add_people(circleid, personid):
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
   
   # add person to circle
-  c.execute("INSERT INTO circles_people (circleid, peopleid) VALUES (?, ?)", (id, personid))
+  c.execute("INSERT INTO circles_people (circleid, peopleid) VALUES (?, ?)", (circleid, personid))
 
   # add a default payment to the circle for the person
-  c.execute("SELECT id FROM accounts WHERE person = ?", (personid,))
+  c.execute("SELECT id, person FROM accounts WHERE person = ?", (personid,))
   account_id = c.fetchone()[0]
-  current_date = datetime.now().strftime("%m-%d-%Y")
-  sql = "INSERT INTO payments ('person', 'account', 'circle', 'amount', 'date', 'comments') VALUES (?, ?, ?, 0, ?, 'Initial payment on circle add')"
-  c.execute(sql, (personid, account_id, id, current_date))
+  current_date = datetime.now().strftime("%Y-%m-%d")
+  sql = "INSERT INTO payments ('person', 'account', 'circle', 'amount', 'date', 'comments') VALUES (?, ?, ?, ?, ?, ?)"
+  c.execute(sql, (personid, account_id, circleid, 0, '2019-12-03', 'Initial payment on circle add'))
 
   conn.commit()
   conn.close()
@@ -449,10 +449,10 @@ def circles_people_details(id):
   
   # get person
   c.execute("SELECT circleid, name, peopleid, first, last, middle, suffix, email, phone, accountid, accountno FROM participants_vw WHERE peopleid = ?", (id,))
-  person = c.fetchall()[0]
+  person = c.fetchone()
 
   # get payments for person
-  c.execute("SELECT id, date, amount, person, account FROM payments WHERE person = ?", (id,))
+  c.execute("SELECT id, date, amount, person, account FROM payments WHERE person = ? AND ", (id,))
   payments_result = c.fetchall()
   
   c.close()

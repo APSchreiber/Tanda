@@ -144,8 +144,14 @@ $(function () {
             },
 
             goToDetails: function (node, id) {
+                console.log(node);
                 var category = $(node).closest(".managerPane").attr("id");
-                window.location = "/" + category + "/details/" + id
+                var route = "";
+                var containerDiv = $(node).closest("div .tables");
+                if (containerDiv.data("x-id")) {
+                    route += "/" + containerDiv.data("x-id")
+                }
+                window.location = "/" + category + "/details" + route + "/" + id
             },
 
             addEditItem: function (node, id) {

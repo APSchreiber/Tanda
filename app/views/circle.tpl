@@ -10,7 +10,7 @@ There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. Th
 <div id="circles_people" class="managerPane">
 
     <h2>People</h2>
-    <div class="tables" id="circles_people-table">
+    <div class="tables" data-x-id="{{model.id}}" id="circles_people-table">
         % include('views/_item_table.tpl', items=items)
     </div>
 
