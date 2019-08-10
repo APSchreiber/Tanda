@@ -110,13 +110,14 @@ def response_dict(result, cols):
 def custom500(error):
   return "Error: " + str(error)
 
+# @route('/test')
+# def t():
+#   x = data_tools.test
+#   return str(x)
+
 @route('/')
 def root_static():
   return static_file('index.html', root='../')
-    
-@route('/s/<filepath:path>')
-def serve_static(filepath):
-  return static_file(filepath, root='../')
 
 # Static Routes
 @get("/static/html/<filepath:re:.*\.html>")

@@ -1,4 +1,4 @@
-% rebase('tpl/base.tpl', title='Circle Participant')
+% rebase('views/base.tpl', title='Circle Participant')
 
 <h2>Participant Information</h2>
 
@@ -6,7 +6,7 @@
 
     <h2>Payments</h2>
     <div class="tables" id="payments-table">
-        % include('tpl/item_table.tpl', items=items)
+        % include('views/item_table.tpl', items=items)
     </div>
 
 
