@@ -15,14 +15,14 @@ There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. Th
     </div>
 
 
-    <div class="inputForm hidden" id="editForm-circles_people" data-add-route-params="{{model.id}},dom~circles_people-peopleid~val">
+    <div class="inputForm hidden" id="editForm-circles_people" data-add-route-params="{{model.id}},dom~circles_people-personid~val">
 
         <h2>People</h2>
         <div class="closeX">x</div>
         <div class="clear"></div>
 
-        <label for="circles_people-peopleid">Person</label>
-        <select class="event" name="circles_people-peopleid" id="circles_people-peopleid" data-domain="people-last"></select>
+        <label for="circles_people-personid">Person</label>
+        <select class="event" name="circles_people-personid" id="circles_people-personid" data-domain="people-last"></select>
         <div class="clear"></div>
 
         <button type="button" class="submitButton" id="submit-circles_people">Save</button>

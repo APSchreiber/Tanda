@@ -216,7 +216,7 @@ def circles_details(id):
   circle = result_circles[0]
   
   # get participants in circle
-  c.execute("SELECT peopleid, first, last, payout_order, distribution, circle_balance FROM participants_vw WHERE circleid = ?", (id,))
+  c.execute("SELECT personid, first, last, payout_order, distribution, circle_balance FROM participants_vw WHERE circleid = ?", (id,))
   result_participants = c.fetchall()
 
   # get available people
@@ -326,7 +326,7 @@ def circles_add_people(circleid, personid):
   c = conn.cursor()
   
   # add person to circle
-  c.execute("INSERT INTO circles_people (circleid, peopleid) VALUES (?, ?)", (circleid, personid))
+  c.execute("INSERT INTO circles_people (circleid, personid) VALUES (?, ?)", (circleid, personid))
 
   # add a default payment to the circle for the person
   c.execute("SELECT id, person FROM accounts WHERE person = ?", (personid,))
@@ -442,13 +442,13 @@ def r_people(id):
   return {"success": True}
 
 # Details page for participant in a circle
-@route('/circles_people/details/<id>')
+@route('/circles_people/details/<circleid>/<personid>')
 def circles_people_details(id):
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
   
   # get person
-  c.execute("SELECT circleid, name, peopleid, first, last, middle, suffix, email, phone, accountid, accountno FROM participants_vw WHERE peopleid = ?", (id,))
+  c.execute("SELECT circleid, name, personid, first, last, middle, suffix, email, phone, accountid, accountno FROM participants_vw WHERE personid = ?", (id,))
   person = c.fetchone()
 
   # get payments for person
@@ -471,7 +471,7 @@ def circles_people_details(id):
 def listCirclesPeople(format):
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
-  c.execute("SELECT peopleid, first, last, payout_order, distribution, circle_balance FROM participants_vw")
+  c.execute("SELECT personid, first, last, payout_order, distribution, circle_balance FROM participants_vw")
   result = c.fetchall()
   c.close()
   response = {}
