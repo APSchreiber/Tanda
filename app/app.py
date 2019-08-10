@@ -443,16 +443,16 @@ def r_people(id):
 
 # Details page for participant in a circle
 @route('/circles_people/details/<circleid>/<personid>')
-def circles_people_details(id):
+def circles_people_details(circleid, personid):
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
   
   # get person
-  c.execute("SELECT circleid, name, personid, first, last, middle, suffix, email, phone, accountid, accountno FROM participants_vw WHERE personid = ?", (id,))
+  c.execute("SELECT circleid, name, personid, first, last, middle, suffix, email, phone, accountid, accountno FROM participants_vw WHERE personid = ?", (personid,))
   person = c.fetchone()
 
   # get payments for person
-  c.execute("SELECT id, date, amount, person, account FROM payments WHERE person = ? AND ", (id,))
+  c.execute("SELECT id, date, amount, person, account FROM payments WHERE person = ? AND circle = ?", (personid, circleid))
   payments_result = c.fetchall()
   
   c.close()
