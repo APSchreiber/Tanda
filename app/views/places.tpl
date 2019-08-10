@@ -1,4 +1,4 @@
-% rebase('views/base.tpl', title='Tanda - Places')
+% rebase('views/_base.tpl', title='Tanda - Places')
 <div id="places" class="managerPane">
     <h1>Places</h1>
 
