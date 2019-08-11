@@ -11,7 +11,7 @@ There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. Th
 
     <h2>People</h2>
     <div class="tables" data-x-id="{{model.id}}" id="circles_people-table">
-        % include('views/_item_table.tpl', items=items)
+        % include('views/_table.tpl', table=tables[0])
     </div>
 
 
@@ -33,9 +33,6 @@ There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. Th
 
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
-<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200' rel='stylesheet' type='text/css'>
 <style type="text/css">
     text {
         font-family: 'Source Sans Pro', sans-serif;
@@ -156,5 +153,3 @@ There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. Th
     render();
     setInterval(render, 2000);
 </script>
-
-<script type="text/javascript" src="/static/js/DataTables/datatables.min.js"></script>

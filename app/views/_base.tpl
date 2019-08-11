@@ -18,6 +18,7 @@
     <link href='http://fonts.googleapis.com/css?family=Alegreya+SC:400,900' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Fredericka+the+Great' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Farsan|Kalam" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200' rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="/static/js/DataTables/datatables.min.css" />
@@ -26,6 +27,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/static/js/DataTables/datatables.min.js"></script>
+    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
     <script src="/static/js/config.json.js"></script>
     <script src="/static/js/autocomplete.js"></script>
     <script src="/static/js/tables.js"></script>

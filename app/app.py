@@ -216,7 +216,7 @@ def circles_details(id):
   circle = result_circles[0]
   
   # get participants in circle
-  c.execute("SELECT personid, first, last, payout_order, distribution, circle_balance FROM participants_vw WHERE circleid = ?", (id,))
+  c.execute("SELECT personid, first, last, payout_order, distribution, circle_balance FROM participants_vw WHERE circleid = ?", (2,))
   result_participants = c.fetchall()
 
   # get available people
@@ -225,15 +225,17 @@ def circles_details(id):
 
   conn.close()
 
-  bag_participants = {}
-  bag_participants["items"] = []
+  table_participants = {}
+  table_participants['heads'] = ("id", "first", "last", "payout_order", "distribution", "circle_balance")
+  table_participants['rows'] = []
   for r in result_participants:
-    item = dict_builder(("id", "first", "last", "payout_order", "distribution", "circle_balance"), r)
-    bag_participants["items"].append(item)
+    item = dict_builder(table_participants['heads'], r)
+    table_participants['rows'].append(item)
 
   vm = Circle_vm(circle[0], circle[1], circle[2], circle[3], circle[4], circle[5], circle[6], result_participants, result_people)
+  tables = [table_participants]
 
-  return template('views/circle', model=vm, items=bag_participants["items"])
+  return template('views/circle', model=vm, tables=tables)
 
 
 @route('/circles/manage')

@@ -259,10 +259,18 @@ $(function () {
                                     }
                                 });
                             });
-
                         }
                     });
                 }
+            },
+            displayTable: function (divId) {
+                //$("#" + divId).find("table").first().DataTable({
+                $(".data-table").DataTable({
+                    select: true,
+                    buttons: window.tanda.tables.dtConfig.buttons,
+                    dom: "lfrtBip",
+                    destroy: true,
+                });
             },
             displayItems: function (category) {
                 $.ajax({
@@ -318,9 +326,10 @@ $(function () {
                 }
 
                 $(".tables").each(function() {
-                    var tableId = $(this).attr("id");
-                    var tableName = tableId.split("-").shift();
-                    window.tanda.tables.displayItems(tableName);
+                    var divId = $(this).attr("id");
+                    var tableName = divId.split("-").shift();
+                    window.tanda.tables.displayTable(divId);
+                    //window.tanda.tables.displayItems(tableName);
                 });
             }
         }
