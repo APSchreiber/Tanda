@@ -28,7 +28,7 @@ circles_cols = ('name', 'start', 'months', 'loan', 'capacity', 'description', 'c
 ### View Models ###
 
 class Circle_vm:
-  def __init__(self, id, name, start, finish, loan, capacity, enrolled, participants, people_list):
+  def __init__(self, id, name, start, finish, loan, capacity, enrolled, participants, people_list, table_participants):
     self.id = id
     self.name = name
     self.start = start
@@ -38,6 +38,7 @@ class Circle_vm:
     self.enrolled = enrolled
     self.participants = participants
     self.people_list = people_list
+    self.table_participants = table_participants
 
 class Participant_vm:
   def __init__(self, person_id, person_name, account, circle_name):
@@ -112,6 +113,44 @@ def response_dict(result, cols):
     item = dict_builder(cols, r)
     response["items"].append(item)
   return response
+
+
+# Table object class
+class Table:
+  def __init__(self, cols, data, buttons=None):
+    self.cols = cols
+    self.data = data
+    if buttons is not None:
+      self.buttons = "custom"
+    else:
+      self.buttons = "default"
+  
+  def _heads(self):
+    if not isinstance(self.cols[0], (list, tuple)):
+      return self.cols
+    else:
+      return [c[0] for c in self.cols]
+
+  def _dict_builder(self, values):
+    i = 0
+    d = collections.OrderedDict()
+    for c in self._heads():
+      d[c] = values[i]
+      i += 1
+    return d
+    
+  def _table_dict(self):
+    tbl = {}
+    tbl['heads'] = self._heads()
+    tbl['rows'] = []
+    tbl['buttons'] = self.buttons
+    for r in self.data:
+      item = self._dict_builder(r)
+      tbl['rows'].append(item)
+    return tbl
+
+  def get_dict(self):
+    return self._table_dict()
 ############################################
 
 @error(500)
@@ -222,19 +261,15 @@ def circles_details(id):
   c.execute("SELECT id, first, last FROM people")
   result_people = c.fetchall()
 
-  conn.close()
+  conn.close()    
 
-  table_participants = {}
-  table_participants['heads'] = ("id", "first", "last", "payout_order", "distribution", "circle_balance")
-  table_participants['rows'] = []
-  for r in result_participants:
-    item = dict_builder(table_participants['heads'], r)
-    table_participants['rows'].append(item)
+  # create the table object
+  table_participants = Table(("id", "first", "last", "payout_order", "distribution", "circle_balance"), result_participants)
 
-  vm = Circle_vm(circle[0], circle[1], circle[2], circle[3], circle[4], circle[5], circle[6], result_participants, result_people)
-  tables = [table_participants]
+  # create the view model
+  vm = Circle_vm(circle[0], circle[1], circle[2], circle[3], circle[4], circle[5], circle[6], result_participants, result_people, table_participants)
 
-  return template('views/circle', model=vm, tables=tables)
+  return template('views/circle', model=vm)
 
 
 @route('/circles/manage')

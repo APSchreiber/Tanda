@@ -2,8 +2,7 @@
     <table class="data-table cell-border compact hover stripe">
       <thead>
         <tr>
-          % heads = table['heads']
-          % for head in heads:
+          % for head in table['heads']:
             <th>{{head}}</th>
           % end
         </tr>

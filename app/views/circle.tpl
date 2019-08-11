@@ -11,7 +11,7 @@ There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. Th
 
     <h2>People</h2>
     <div class="tables" data-x-id="{{model.id}}" id="circles_people-table">
-        % include('views/_table.tpl', table=tables[0])
+        % include('views/_table.tpl', table=model.table_participants.get_dict())
     </div>
 
 
