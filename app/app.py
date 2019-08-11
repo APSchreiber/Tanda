@@ -211,12 +211,11 @@ def circles_details(id):
   c = conn.cursor()
 
   # get the circle
-  c.execute("SELECT id, name, start, finish, loan, capacity, enrolled FROM circles_vw WHERE id = ?", (id,))
-  result_circles = c.fetchall()
-  circle = result_circles[0]
+  c.execute("SELECT id, name, start, finish, loan, capacity, enrolled FROM circles_vw WHERE id = ? LIMIT 1", (id,))
+  circle = c.fetchone()
   
   # get participants in circle
-  c.execute("SELECT personid, first, last, payout_order, distribution, circle_balance FROM participants_vw WHERE circleid = ?", (2,))
+  c.execute("SELECT personid, first, last, payout_order, distribution, circle_balance FROM participants_vw WHERE circleid = ?", (id,))
   result_participants = c.fetchall()
 
   # get available people
