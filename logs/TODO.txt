@@ -1,0 +1,14 @@
+
+
+TODO
+
+    People/manage and other table manage views not updating table ajax until refresh
+
+    Circle balance shows persons full balance for all payments on circles manage page
+
+    Validate form to make address required on add person
+
+DONE
+
+    Bug when one person in two circles 
+        - Fixed by group by change on participants_wv
