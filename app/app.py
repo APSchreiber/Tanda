@@ -320,7 +320,7 @@ def r_circles(id):
   
   return {"success": True}
 
-# Add a percon to a circle
+# Add a person to a circle
 @route('/circles_people/add/<circleid>/<personid>', method='POST')
 def circles_add_people(circleid, personid):
   conn = sqlite3.connect(db_name)
