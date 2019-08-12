@@ -16,17 +16,18 @@
         <div class="clear"></div>
 
         <input class="payments" type="text" id="payments-account" value="{{model.account}}"/>
-        <input class="payments" type="text" id="payments-person" value="{{model.person_id}}"/>
+        <input class="payments" type="text" id="payments-person" value="{{model.personid}}"/>
+        <input class="payments" type="text" id="payments-circle" value="{{model.circleid}}"/>
 
         <label for="payments-date">Date</label>
         <input class="payments" type="date" id="payments-date" />
         <div class="clear"></div>
 
-        <label for="searchPayerBy">Payment Type</label>
+        <label for="payments-type">Payment Type</label>
         <div class="clear"></div>
-        <select id="searchPayerBy">
-            <option selected value="payment">Participant Payment</option>
-            <option value="credit">Payout</option>
+        <select class="payments" id="payments-type">
+            <option selected value="credit">Payment</option>
+            <option value="debit">Payout</option>
         </select><br/>
         <div class="clear"></div>
 

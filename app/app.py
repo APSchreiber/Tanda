@@ -41,11 +41,12 @@ class Circle_vm:
     self.table_participants = table_participants
 
 class Participant_vm:
-  def __init__(self, person_id, person_name, account, circle_name):
-    self.person_id = person_id
+  def __init__(self, personid, person_name, account, circle_name, circleid):
+    self.personid = personid
     self.person_name = person_name
-    self.account = account,
+    self.account = account
     self.circle_name = circle_name
+    self.circleid = circleid
 
 ############################################
 
@@ -488,7 +489,7 @@ def circles_people_details(circleid, personid):
   person = c.fetchone()
 
   # get payments for person
-  c.execute("SELECT id, date, amount, person, account FROM payments WHERE person = ? AND circle = ?", (personid, circleid))
+  c.execute("SELECT id, date, amount, person, account, circle FROM payments WHERE person = ? AND circle = ?", (personid, circleid))
   payments_result = c.fetchall()
   
   c.close()
@@ -498,7 +499,7 @@ def circles_people_details(circleid, personid):
     item = dict_builder(("id", "date", "amount", "person", "account"), r)
     response["items"].append(item)
 
-  vm = Participant_vm(person_id=person[2], person_name=person[3] + " " + person[4], account=person[9], circle_name=person[1])
+  vm = Participant_vm(personid=personid, person_name=person[3] + " " + person[4], account=person[9], circle_name=person[1], circleid=circleid )
 
   return template('views/circles_person', model=vm, items=response["items"])
 
@@ -532,8 +533,13 @@ def add_payment():
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
 
+  # check if credit or debit
+  payment_type = data['type']
+  if payment_type == 'debit':
+    data['amount'] = str(int(data['amount']) * -1) 
+
   # add the payment
-  sql = build_insert(("date", "amount", "person", "account"), "payments", request.json)
+  sql = build_insert(("date", "amount", "person", "account", "circle"), "payments", request.json)
   c.execute(sql[0], sql[1])
   conn.commit()
   
