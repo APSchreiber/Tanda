@@ -255,7 +255,7 @@ def circles_details(id):
   circle = c.fetchone()
   
   # get participants in circle
-  c.execute("SELECT personid, first, last, payout_order, distribution, circle_balance FROM participants_vw WHERE circleid = ?", (id,))
+  c.execute("SELECT personid, first, last, circle_balance FROM participants_vw WHERE circleid = ?", (id,))
   result_participants = c.fetchall()
 
   # get available people
@@ -265,7 +265,7 @@ def circles_details(id):
   conn.close()    
 
   # create the table object
-  table_participants = Table(("id", "first", "last", "payout_order", "distribution", "circle_balance"), result_participants)
+  table_participants = Table(("id", "first", "last", "circle_balance"), result_participants)
 
   # create the view model
   vm = Circle_vm(circle[0], circle[1], circle[2], circle[3], circle[4], circle[5], circle[6], result_participants, result_people, table_participants)
@@ -508,13 +508,13 @@ def circles_people_details(circleid, personid):
 def listCirclesPeople(format):
   conn = sqlite3.connect(db_name)
   c = conn.cursor()
-  c.execute("SELECT personid, first, last, payout_order, distribution, circle_balance FROM participants_vw")
+  c.execute("SELECT personid, first, last, circle_balance FROM participants_vw")
   result = c.fetchall()
   c.close()
   response = {}
   response["items"] = []
   for r in result:
-    item = dict_builder(("id", "first", "last", "payout_order", "distribution", "circle_balance"), r)
+    item = dict_builder(("id", "first", "last", "circle_balance"), r)
     response["items"].append(item)
   
   if format == 'table':
