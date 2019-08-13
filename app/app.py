@@ -28,7 +28,7 @@ circles_cols = ('name', 'start', 'months', 'loan', 'capacity', 'description', 'c
 ### View Models ###
 
 class Circle_vm:
-  def __init__(self, id, name, start, finish, loan, capacity, enrolled, participants, people_list, table_participants):
+  def __init__(self, id, name, start, finish, loan, capacity, enrolled, participants, people_list, table_participants, table_payout_order):
     self.id = id
     self.name = name
     self.start = start
@@ -39,6 +39,7 @@ class Circle_vm:
     self.participants = participants
     self.people_list = people_list
     self.table_participants = table_participants
+    self.table_payout_order = table_payout_order
 
 class Participant_vm:
   def __init__(self, personid, person_name, account, circle_name, circleid):
@@ -262,13 +263,20 @@ def circles_details(id):
   c.execute("SELECT id, first, last FROM people")
   result_people = c.fetchall()
 
+  # get payput order info
+  c.execute("SELECT first, last, payout_order, split_num, loan, payment_amount, payout_date, payout_amount FROM payout_schedules_vw WHERE circleid = ?", (id,))
+  result_payput_order = c.fetchall()
+
   conn.close()    
 
-  # create the table object
+  # create the participants table object
   table_participants = Table(("id", "first", "last", "circle_balance"), result_participants)
 
+  # create the payout order table object
+  table_payout_order = Table(("first", "last", "payout_order", "split_num", 'loan', 'payment_amount', 'payout_date', 'payout_amount'), result_payput_order)
+
   # create the view model
-  vm = Circle_vm(circle[0], circle[1], circle[2], circle[3], circle[4], circle[5], circle[6], result_participants, result_people, table_participants)
+  vm = Circle_vm(circle[0], circle[1], circle[2], circle[3], circle[4], circle[5], circle[6], result_participants, result_people, table_participants, table_payout_order)
 
   return template('views/circle', model=vm)
 
@@ -375,6 +383,38 @@ def circles_add_people(circleid, personid):
   conn.commit()
   conn.close()
   return {"success": True}
+
+# Add Payout Order Item
+@route('/circles_payouts/add', method='POST')
+def circles_add_payout_order():
+  data = request.json
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("INSERT INTO payout_schedules (circle, person, payout_order) VALUES (?, ?, ?)", (data['circle'], data['person'], data['order']))
+  conn.commit()
+  conn.close()
+
+  return {'success': True}
+
+# Return a listing of payout orders
+@route('/circles_payouts/list/<format>')
+def listCirclesPeople(format):
+  conn = sqlite3.connect(db_name)
+  c = conn.cursor()
+  c.execute("SELECT personid, first, last, payout_order, payment_amount, payout_date, split_num FROM payout_schedules_vw")
+  result = c.fetchall()
+  c.close()
+  response = {}
+  response["items"] = []
+
+  for r in result:
+    item = dict_builder(('id', 'first', 'last', 'payout_order', 'payment_amount', 'payout_date', 'split_num'), r)
+    response["items"].append(item)
+  
+  if format == 'table':
+    return template('views/_item_table', items=response["items"])
+  
+  return response
 
 
 #########################
