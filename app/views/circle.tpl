@@ -1,6 +1,6 @@
 % rebase('views/_base.tpl', title='Circle')
 <span id="circleId" data-id="{{model.id}}" data-enrolled="{{model.enrolled}}" data-percent="{{round((model.enrolled * 100.0) / model.capacity)}}"></span>
-<h1>{{model.name}}</h1>
+<h1>{{model.name}} {{model.id}}</h1>
 
 <h2>Circle Information</h2>
 There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. There are {{model.capacity - model.enrolled}} seats left!
@@ -14,7 +14,6 @@ There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. Th
         % include('views/_table.tpl', table=model.table_participants.get_dict())
     </div>
 
-
     <div class="inputForm hidden" id="editForm-circles_people" data-add-route-params="{{model.id}},dom~circles_people-personid~val">
 
         <h2>People</h2>
@@ -22,7 +21,7 @@ There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. Th
         <div class="clear"></div>
 
         <label for="circles_people-personid">Person</label>
-        <select class="event" name="circles_people-personid" id="circles_people-personid" data-domain="people-last"></select>
+        <select class="circles_people" name="circles_people-personid" id="circles_people-personid" data-domain="people-last"></select>
         <div class="clear"></div>
 
         <button type="button" class="submitButton" id="submit-circles_people">Save</button>
@@ -30,7 +29,35 @@ There are currently {{model.enrolled}} of {{model.capacity}} people enrolled. Th
 
     </div>
     <div class="clear"></div>
+</div>
 
+<div id="circles_payouts" class="managerPane">
+    <h2>Payout Order</h2>
+    <div class="tables" data-x-id="{{model.id}}" id="circles_payouts-table">
+        % include('views/_table.tpl', table=model.table_payout_order.get_dict())
+    </div>
+
+    <div class="inputForm hidden" id="editForm-circles_payouts">
+
+        <h2>Payout Order</h2>
+        <div class="closeX">x</div>
+        <div class="clear"></div>
+
+        <input class="circles_payouts" type="text" id="circles_payouts-circle" value="{{model.id}}" />
+
+        <label for="circles_payouts-person">Person</label>
+        <select class="circles_payouts" name="circles_payouts-person" id="circles_payouts-person" data-domain="people-last"></select>
+        <div class="clear"></div>
+
+        <label for="circles_payouts-order">Order</label>
+        <input class="circles_payouts" type="text" id="circles_payouts-order" />
+        <div class="clear"></div>
+
+        <button type="button" class="submitButton" id="submit-circles_payouts">Save</button>
+        <br /><br />
+
+    </div>
+    <div class="clear"></div>
 </div>
 
 <style type="text/css">

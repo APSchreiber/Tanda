@@ -187,6 +187,7 @@ $(function () {
                     $(".submitButton").bind("click", function () {
 
                         var items = window.tanda.tables.getItems(category);
+                        console.log(items);
 
                         // check for additional route params
                         addParams = "";
